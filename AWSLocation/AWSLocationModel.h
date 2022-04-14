@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -74,6 +74,16 @@ typedef NS_ENUM(NSInteger, AWSLocationPricingPlan) {
     AWSLocationPricingPlanMobileAssetManagement,
 };
 
+typedef NS_ENUM(NSInteger, AWSLocationRouteMatrixErrorCode) {
+    AWSLocationRouteMatrixErrorCodeUnknown,
+    AWSLocationRouteMatrixErrorCodeRouteNotFound,
+    AWSLocationRouteMatrixErrorCodeRouteTooLong,
+    AWSLocationRouteMatrixErrorCodePositionsNotFound,
+    AWSLocationRouteMatrixErrorCodeDestinationPositionNotFound,
+    AWSLocationRouteMatrixErrorCodeDeparturePositionNotFound,
+    AWSLocationRouteMatrixErrorCodeOtherValidationError,
+};
+
 typedef NS_ENUM(NSInteger, AWSLocationTravelMode) {
     AWSLocationTravelModeUnknown,
     AWSLocationTravelModeCar,
@@ -120,6 +130,9 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationBatchUpdateDevicePositionRequest;
 @class AWSLocationBatchUpdateDevicePositionResponse;
 @class AWSLocationCalculateRouteCarModeOptions;
+@class AWSLocationCalculateRouteMatrixRequest;
+@class AWSLocationCalculateRouteMatrixResponse;
+@class AWSLocationCalculateRouteMatrixSummary;
 @class AWSLocationCalculateRouteRequest;
 @class AWSLocationCalculateRouteResponse;
 @class AWSLocationCalculateRouteSummary;
@@ -207,6 +220,8 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @class AWSLocationPositionalAccuracy;
 @class AWSLocationPutGeofenceRequest;
 @class AWSLocationPutGeofenceResponse;
+@class AWSLocationRouteMatrixEntry;
+@class AWSLocationRouteMatrixEntryError;
 @class AWSLocationSearchForPositionResult;
 @class AWSLocationSearchForSuggestionsResult;
 @class AWSLocationSearchForTextResult;
@@ -667,6 +682,117 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 /**
  
  */
+@interface AWSLocationCalculateRouteMatrixRequest : AWSRequest
+
+
+/**
+ <p>The name of the route calculator resource that you want to use to calculate the route matrix. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable calculatorName;
+
+/**
+ <p>Specifies route preferences when traveling by <code>Car</code>, such as avoiding routes that use ferries or tolls.</p><p>Requirements: <code>TravelMode</code> must be specified as <code>Car</code>.</p>
+ */
+@property (nonatomic, strong) AWSLocationCalculateRouteCarModeOptions * _Nullable carModeOptions;
+
+/**
+ <p>Sets the time of departure as the current time. Uses the current time to calculate the route matrix. You can't set both <code>DepartureTime</code> and <code>DepartNow</code>. If neither is set, the best time of day to travel with the best traffic conditions is used to calculate the route matrix.</p><p>Default Value: <code>false</code></p><p>Valid Values: <code>false</code> | <code>true</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable departNow;
+
+/**
+ <p>The list of departure (origin) positions for the route matrix. An array of points, each of which is itself a 2-value array defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>. For example, <code>[-123.115, 49.285]</code>.</p><important><p>Depending on the data provider selected in the route calculator resource there may be additional restrictions on the inputs you can choose. See <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route-matrix.html#matrix-routing-position-limits"> Position restrictions</a> in the <i>Amazon Location Service Developer Guide</i>.</p></important><note><p>For route calculators that use Esri as the data provider, if you specify a departure that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html"> moves the position to the nearest road</a>. The snapped value is available in the result in <code>SnappedDeparturePositions</code>.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<NSNumber *> *> * _Nullable departurePositions;
+
+/**
+ <p>Specifies the desired time of departure. Uses the given time to calculate the route matrix. You can't set both <code>DepartureTime</code> and <code>DepartNow</code>. If neither is set, the best time of day to travel with the best traffic conditions is used to calculate the route matrix.</p><note><p>Setting a departure time in the past returns a <code>400 ValidationException</code> error.</p></note><ul><li><p>In <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. For example, <code>2020–07-2T12:15:20.000Z+01:00</code></p></li></ul>
+ */
+@property (nonatomic, strong) NSDate * _Nullable departureTime;
+
+/**
+ <p>The list of destination positions for the route matrix. An array of points, each of which is itself a 2-value array defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>. For example, <code>[-122.339, 47.615]</code></p><important><p>Depending on the data provider selected in the route calculator resource there may be additional restrictions on the inputs you can choose. See <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route-matrix.html#matrix-routing-position-limits"> Position restrictions</a> in the <i>Amazon Location Service Developer Guide</i>.</p></important><note><p>For route calculators that use Esri as the data provider, if you specify a destination that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html"> moves the position to the nearest road</a>. The snapped value is available in the result in <code>SnappedDestinationPositions</code>.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<NSNumber *> *> * _Nullable destinationPositions;
+
+/**
+ <p>Set the unit system to specify the distance.</p><p>Default Value: <code>Kilometers</code></p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
+ */
+@property (nonatomic, assign) AWSLocationTravelMode travelMode;
+
+/**
+ <p>Specifies route preferences when traveling by <code>Truck</code>, such as avoiding routes that use ferries or tolls, and truck specifications to consider when choosing an optimal road.</p><p>Requirements: <code>TravelMode</code> must be specified as <code>Truck</code>.</p>
+ */
+@property (nonatomic, strong) AWSLocationCalculateRouteTruckModeOptions * _Nullable truckModeOptions;
+
+@end
+
+/**
+ <p>Returns the result of the route matrix calculation.</p>
+ Required parameters: [RouteMatrix, Summary]
+ */
+@interface AWSLocationCalculateRouteMatrixResponse : AWSModel
+
+
+/**
+ <p>The calculated route matrix containing the results for all pairs of <code>DeparturePositions</code> to <code>DestinationPositions</code>. Each row corresponds to one entry in <code>DeparturePositions</code>. Each entry in the row corresponds to the route from that entry in <code>DeparturePositions</code> to an entry in <code>DestinationPositions</code>. </p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<AWSLocationRouteMatrixEntry *> *> * _Nullable routeMatrix;
+
+/**
+ <p>For routes calculated using an Esri route calculator resource, departure positions are snapped to the closest road. For Esri route calculator resources, this returns the list of departure/origin positions used for calculation of the <code>RouteMatrix</code>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<NSNumber *> *> * _Nullable snappedDeparturePositions;
+
+/**
+ <p>The list of destination positions for the route matrix used for calculation of the <code>RouteMatrix</code>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSArray<NSNumber *> *> * _Nullable snappedDestinationPositions;
+
+/**
+ <p>Contains information about the route matrix, <code>DataSource</code>, <code>DistanceUnit</code>, <code>RouteCount</code> and <code>ErrorCount</code>.</p>
+ */
+@property (nonatomic, strong) AWSLocationCalculateRouteMatrixSummary * _Nullable summary;
+
+@end
+
+/**
+ <p>A summary of the calculated route matrix.</p>
+ Required parameters: [DataSource, DistanceUnit, ErrorCount, RouteCount]
+ */
+@interface AWSLocationCalculateRouteMatrixSummary : AWSModel
+
+
+/**
+ <p>The data provider of traffic and road network data used to calculate the routes. Indicates one of the available providers:</p><ul><li><p><code>Esri</code></p></li><li><p><code>Here</code></p></li></ul><p>For more information about data providers, see <a href="https://docs.aws.amazon.com/location/latest/developerguide/what-is-data-provider.html">Amazon Location Service data providers</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable dataSource;
+
+/**
+ <p>The unit of measurement for route distances.</p>
+ */
+@property (nonatomic, assign) AWSLocationDistanceUnit distanceUnit;
+
+/**
+ <p>The count of error results in the route matrix. If this number is 0, all routes were calculated successfully.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable errorCount;
+
+/**
+ <p>The count of cells in the route matrix. Equal to the number of <code>DeparturePositions</code> multiplied by the number of <code>DestinationPositions</code>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable routeCount;
+
+@end
+
+/**
+ 
+ */
 @interface AWSLocationCalculateRouteRequest : AWSRequest
 
 
@@ -686,7 +812,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSNumber * _Nullable departNow;
 
 /**
- <p>The start position for the route. Defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>.</p><ul><li><p>For example, <code>[-123.115, 49.285]</code></p></li></ul><note><p>If you specify a departure that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">moves the position to the nearest road</a>. If Esri is the provider for your route calculator, specifying a route that is longer than 400 km returns a <code>400 RoutesValidationException</code> error.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
+ <p>The start position for the route. Defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>.</p><ul><li><p>For example, <code>[-123.115, 49.285]</code></p></li></ul><note><p>If you specify a departure that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">moves the position to the nearest road</a>. If Esri is the provider for your route calculator, specifying a route that is longer than 400 km returns a <code>400 RoutesValidationException</code> error.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable departurePosition;
 
@@ -696,7 +822,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSDate * _Nullable departureTime;
 
 /**
- <p>The finish position for the route. Defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>.</p><ul><li><p> For example, <code>[-122.339, 47.615]</code></p></li></ul><note><p>If you specify a destination that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">moves the position to the nearest road</a>. </p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
+ <p>The finish position for the route. Defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[longitude, latitude]</code>.</p><ul><li><p> For example, <code>[-122.339, 47.615]</code></p></li></ul><note><p>If you specify a destination that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">moves the position to the nearest road</a>. </p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable destinationPosition;
 
@@ -711,7 +837,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSNumber * _Nullable includeLegGeometry;
 
 /**
- <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p><p>The <code>TravelMode</code> you specify determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
+ <p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p><p>The <code>TravelMode</code> you specify also determines how you specify route preferences: </p><ul><li><p>If traveling by <code>Car</code> use the <code>CarModeOptions</code> parameter.</p></li><li><p>If traveling by <code>Truck</code> use the <code>TruckModeOptions</code> parameter.</p></li></ul><p>Default Value: <code>Car</code></p>
  */
 @property (nonatomic, assign) AWSLocationTravelMode travelMode;
 
@@ -721,7 +847,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) AWSLocationCalculateRouteTruckModeOptions * _Nullable truckModeOptions;
 
 /**
- <p>Specifies an ordered list of up to 23 intermediate positions to include along a route between the departure position and destination position. </p><ul><li><p>For example, from the <code>DeparturePosition</code><code>[-123.115, 49.285]</code>, the route follows the order that the waypoint positions are given <code>[[-122.757, 49.0021],[-122.349, 47.620]]</code></p></li></ul><note><p>If you specify a waypoint position that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">moves the position to the nearest road</a>. </p><p>Specifying more than 23 waypoints returns a <code>400 ValidationException</code> error.</p><p>If Esri is the provider for your route calculator, specifying a route that is longer than 400 km returns a <code>400 RoutesValidationException</code> error.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
+ <p>Specifies an ordered list of up to 23 intermediate positions to include along a route between the departure position and destination position. </p><ul><li><p>For example, from the <code>DeparturePosition</code><code>[-123.115, 49.285]</code>, the route follows the order that the waypoint positions are given <code>[[-122.757, 49.0021],[-122.349, 47.620]]</code></p></li></ul><note><p>If you specify a waypoint position that's not located on a road, Amazon Location <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">moves the position to the nearest road</a>. </p><p>Specifying more than 23 waypoints returns a <code>400 ValidationException</code> error.</p><p>If Esri is the provider for your route calculator, specifying a route that is longer than 400 km returns a <code>400 RoutesValidationException</code> error.</p></note><p>Valid Values: <code>[-180 to 180,-90 to 90]</code></p>
  */
 @property (nonatomic, strong) NSArray<NSArray<NSNumber *> *> * _Nullable waypointPositions;
 
@@ -735,7 +861,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Contains details about each path between a pair of positions included along a route such as: <code>StartPosition</code>, <code>EndPosition</code>, <code>Distance</code>, <code>DurationSeconds</code>, <code>Geometry</code>, and <code>Steps</code>. The number of legs returned corresponds to one fewer than the total number of positions in the request. </p><p>For example, a route with a departure position and destination position returns one leg with the positions <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">snapped to a nearby road</a>:</p><ul><li><p>The <code>StartPosition</code> is the departure position.</p></li><li><p>The <code>EndPosition</code> is the destination position.</p></li></ul><p>A route with a waypoint between the departure and destination position returns two legs with the positions snapped to a nearby road:</p><ul><li><p>Leg 1: The <code>StartPosition</code> is the departure position . The <code>EndPosition</code> is the waypoint positon.</p></li><li><p>Leg 2: The <code>StartPosition</code> is the waypoint position. The <code>EndPosition</code> is the destination position.</p></li></ul>
+ <p>Contains details about each path between a pair of positions included along a route such as: <code>StartPosition</code>, <code>EndPosition</code>, <code>Distance</code>, <code>DurationSeconds</code>, <code>Geometry</code>, and <code>Steps</code>. The number of legs returned corresponds to one fewer than the total number of positions in the request. </p><p>For example, a route with a departure position and destination position returns one leg with the positions <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">snapped to a nearby road</a>:</p><ul><li><p>The <code>StartPosition</code> is the departure position.</p></li><li><p>The <code>EndPosition</code> is the destination position.</p></li></ul><p>A route with a waypoint between the departure and destination position returns two legs with the positions snapped to a nearby road:</p><ul><li><p>Leg 1: The <code>StartPosition</code> is the departure position . The <code>EndPosition</code> is the waypoint positon.</p></li><li><p>Leg 2: The <code>StartPosition</code> is the waypoint position. The <code>EndPosition</code> is the destination position.</p></li></ul>
  */
 @property (nonatomic, strong) NSArray<AWSLocationLeg *> * _Nullable legs;
 
@@ -792,7 +918,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSNumber * _Nullable avoidFerries;
 
 /**
- <p>Avoids ferries when calculating routes.</p><p>Default Value: <code>false</code></p><p>Valid Values: <code>false</code> | <code>true</code></p>
+ <p>Avoids tolls when calculating routes.</p><p>Default Value: <code>false</code></p><p>Valid Values: <code>false</code> | <code>true</code></p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable avoidTolls;
 
@@ -830,12 +956,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
 /**
- <p>Optionally specifies the pricing plan for the geofence collection. Defaults to <code>RequestBasedUsage</code>.</p><p>For additional details and restrictions on each pricing plan option, see the <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing page</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>Specifies the data provider for the geofence collection.</p><ul><li><p>Required value for the following pricing plans: <code>MobileAssetTracking </code>| <code>MobileAssetManagement</code></p></li></ul><p>For more information about <a href="https://aws.amazon.com/location/data-providers/">Data Providers</a>, and <a href="https://aws.amazon.com/location/pricing/">Pricing plans</a>, see the Amazon Location Service product page.</p><note><p>Amazon Location Service only uses <code>PricingPlanDataSource</code> to calculate billing for your geofence collection. Your data won't be shared with the data provider, and will remain in your AWS account or Region unless you move it.</p></note><p>Valid Values: <code>Esri </code>| <code>Here</code></p>
+ <p>This parameter is no longer used.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -891,7 +1017,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable mapName;
 
 /**
- <p>Optionally specifies the pricing plan for the map resource. Defaults to <code>RequestBasedUsage</code>.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -952,7 +1078,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable indexName;
 
 /**
- <p>Optionally specifies the pricing plan for the place index resource. Defaults to <code>RequestBasedUsage</code>.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -1008,7 +1134,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>Optionally specifies the pricing plan for the route calculator resource. Defaults to <code>RequestBasedUsage</code>.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -1064,12 +1190,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, assign) AWSLocationPositionFiltering positionFiltering;
 
 /**
- <p>Optionally specifies the pricing plan for the tracker resource. Defaults to <code>RequestBasedUsage</code>.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>Specifies the data provider for the tracker resource.</p><ul><li><p>Required value for the following pricing plans: <code>MobileAssetTracking </code>| <code>MobileAssetManagement</code></p></li></ul><p>For more information about <a href="https://aws.amazon.com/location/data-providers/">Data Providers</a>, and <a href="https://aws.amazon.com/location/pricing/">Pricing plans</a>, see the Amazon Location Service product page.</p><note><p>Amazon Location Service only uses <code>PricingPlanDataSource</code> to calculate billing for your tracker resource. Your data will not be shared with the data provider, and will remain in your AWS account or Region unless you move it.</p></note><p>Valid values: <code>Esri</code> | <code>Here</code></p>
+ <p>This parameter is no longer used.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -1271,12 +1397,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
 /**
- <p>The pricing plan selected for the specified geofence collection.</p><p>For additional details and restrictions on each pricing plan option, see the <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing page</a>.</p>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>The specified data provider for the geofence collection.</p>
+ <p>No longer used. Always returns an empty string.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -1342,7 +1468,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable mapName;
 
 /**
- <p>The pricing plan selected for the specified map resource.</p><pre><code> &lt;p&gt;For additional details and restrictions on each pricing plan option, see &lt;a href=&quot;https://aws.amazon.com/location/pricing/&quot;&gt;Amazon Location Service pricing&lt;/a&gt;.&lt;/p&gt; </code></pre>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -1408,7 +1534,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable indexName;
 
 /**
- <p>The pricing plan selected for the specified place index resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -1469,7 +1595,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The pricing plan selected for the specified route calculator resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -1525,12 +1651,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, assign) AWSLocationPositionFiltering positionFiltering;
 
 /**
- <p>The pricing plan selected for the specified tracker resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>The specified data provider for the tracker resource.</p>
+ <p>No longer used. Always returns an empty string.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -1613,7 +1739,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable deviceId;
 
 /**
- <p>The latest device position defined in <a href="https://earth-info.nga.mil/GandG/wgs84/index.html">WGS 84</a> format: <code>[X or longitude, Y or latitude]</code>.</p>
+ <p>The latest device position defined in <a href="https://earth-info.nga.mil/index.php?dir=wgs84&amp;action=wgs84">WGS 84</a> format: <code>[X or longitude, Y or latitude]</code>.</p>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable position;
 
@@ -1683,6 +1809,11 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>Specify the end time for the position history in <a href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. By default, the value will be the time that the request is made.</p><p>Requirement:</p><ul><li><p>The time specified for <code>EndTimeExclusive</code> must be after the time for <code>StartTimeInclusive</code>.</p></li></ul>
  */
 @property (nonatomic, strong) NSDate * _Nullable endTimeExclusive;
+
+/**
+ <p>An optional limit for the number of device positions returned in a single call.</p><p>Default value: <code>100</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
  <p>The pagination token specifying which page of results to return in the response. If no token is provided, the default page is the first page. </p><p>Default value: <code>null</code></p>
@@ -1833,7 +1964,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>A comma-separated list of fonts to load glyphs from in order of preference. For example, <code>Noto Sans Regular, Arial Unicode</code>.</p><p>Valid fonts stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p><ul><li><p>VectorEsriDarkGrayCanvas – <code>Ubuntu Medium Italic</code> | <code>Ubuntu Medium</code> | <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriLightGrayCanvas – <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Light</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriTopographic – <code>Noto Sans Italic</code> | <code>Noto Sans Regular</code> | <code>Noto Sans Bold</code> | <code>Noto Serif Regular</code> | <code>Roboto Condensed Light Italic</code></p></li><li><p>VectorEsriStreets – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li><li><p>VectorEsriNavigation – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a> styles: </p><ul><li><p>VectorHereBerlin – <code>Fira GO Regular</code> | <code>Fira GO Bold</code></p></li></ul>
+ <p>A comma-separated list of fonts to load glyphs from in order of preference. For example, <code>Noto Sans Regular, Arial Unicode</code>.</p><p>Valid fonts stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri</a> styles: </p><ul><li><p>VectorEsriDarkGrayCanvas – <code>Ubuntu Medium Italic</code> | <code>Ubuntu Medium</code> | <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriLightGrayCanvas – <code>Ubuntu Italic</code> | <code>Ubuntu Regular</code> | <code>Ubuntu Light</code> | <code>Ubuntu Bold</code></p></li><li><p>VectorEsriTopographic – <code>Noto Sans Italic</code> | <code>Noto Sans Regular</code> | <code>Noto Sans Bold</code> | <code>Noto Serif Regular</code> | <code>Roboto Condensed Light Italic</code></p></li><li><p>VectorEsriStreets – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li><li><p>VectorEsriNavigation – <code>Arial Regular</code> | <code>Arial Italic</code> | <code>Arial Bold</code></p></li></ul><p>Valid font stacks for <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies</a> styles: </p><ul><li><p>VectorHereBerlin – <code>Fira GO Regular</code> | <code>Fira GO Bold</code></p></li><li><p>VectorHereExplore, VectorHereExploreTruck – <code>Firo GO Italic</code> | <code>Fira GO Map</code> | <code>Fira GO Map Bold</code> | <code>Noto Sans CJK JP Bold</code> | <code>Noto Sans CJK JP Light</code> | <code>Noto Sans CJK JP Regular</code></p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable fontStack;
 
@@ -1981,7 +2112,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @end
 
 /**
- <p>Contains the calculated route's details for each path between a pair of positions. The number of legs returned corresponds to one fewer than the total number of positions in the request. </p><p>For example, a route with a departure position and destination position returns one leg with the positions <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">snapped to a nearby road</a>:</p><ul><li><p>The <code>StartPosition</code> is the departure position.</p></li><li><p>The <code>EndPosition</code> is the destination position.</p></li></ul><p>A route with a waypoint between the departure and destination position returns two legs with the positions snapped to a nearby road:</p><ul><li><p>Leg 1: The <code>StartPosition</code> is the departure position . The <code>EndPosition</code> is the waypoint positon.</p></li><li><p>Leg 2: The <code>StartPosition</code> is the waypoint position. The <code>EndPosition</code> is the destination position.</p></li></ul>
+ <p>Contains the calculated route's details for each path between a pair of positions. The number of legs returned corresponds to one fewer than the total number of positions in the request. </p><p>For example, a route with a departure position and destination position returns one leg with the positions <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">snapped to a nearby road</a>:</p><ul><li><p>The <code>StartPosition</code> is the departure position.</p></li><li><p>The <code>EndPosition</code> is the destination position.</p></li></ul><p>A route with a waypoint between the departure and destination position returns two legs with the positions snapped to a nearby road:</p><ul><li><p>Leg 1: The <code>StartPosition</code> is the departure position . The <code>EndPosition</code> is the waypoint positon.</p></li><li><p>Leg 2: The <code>StartPosition</code> is the waypoint position. The <code>EndPosition</code> is the destination position.</p></li></ul>
  Required parameters: [Distance, DurationSeconds, EndPosition, StartPosition, Steps]
  */
 @interface AWSLocationLeg : AWSModel
@@ -1998,7 +2129,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSNumber * _Nullable durationSeconds;
 
 /**
- <p>The terminating position of the leg. Follows the format <code>[longitude,latitude]</code>.</p><note><p>If the <code>EndPosition</code> isn't located on a road, it's <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">snapped to a nearby road</a>. </p></note>
+ <p>The terminating position of the leg. Follows the format <code>[longitude,latitude]</code>.</p><note><p>If the <code>EndPosition</code> isn't located on a road, it's <a href="https://docs.aws.amazon.com/location/latest/developerguide/nap-to-nearby-road.html">snapped to a nearby road</a>. </p></note>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable endPosition;
 
@@ -2008,7 +2139,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) AWSLocationLegGeometry * _Nullable geometry;
 
 /**
- <p>The starting position of the leg. Follows the format <code>[longitude,latitude]</code>.</p><note><p>If the <code>StartPosition</code> isn't located on a road, it's <a href="https://docs.aws.amazon.com/location/latest/developerguide/calculate-route.html#snap-to-nearby-road">snapped to a nearby road</a>. </p></note>
+ <p>The starting position of the leg. Follows the format <code>[longitude,latitude]</code>.</p><note><p>If the <code>StartPosition</code> isn't located on a road, it's <a href="https://docs.aws.amazon.com/location/latest/developerguide/snap-to-nearby-road.html">snapped to a nearby road</a>. </p></note>
  */
 @property (nonatomic, strong) NSArray<NSNumber *> * _Nullable startPosition;
 
@@ -2145,7 +2276,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the geofence collection details.</p>
- Required parameters: [CollectionName, CreateTime, Description, PricingPlan, UpdateTime]
+ Required parameters: [CollectionName, CreateTime, Description, UpdateTime]
  */
 @interface AWSLocationListGeofenceCollectionsResponseEntry : AWSModel
 
@@ -2166,12 +2297,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The pricing plan for the specified geofence collection.</p><p>For additional details and restrictions on each pricing plan option, see the <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing page</a>.</p>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>The specified data provider for the geofence collection.</p>
+ <p>No longer used. Always returns an empty string.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -2290,7 +2421,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains details of an existing map resource in your AWS account.</p>
- Required parameters: [CreateTime, DataSource, Description, MapName, PricingPlan, UpdateTime]
+ Required parameters: [CreateTime, DataSource, Description, MapName, UpdateTime]
  */
 @interface AWSLocationListMapsResponseEntry : AWSModel
 
@@ -2316,7 +2447,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable mapName;
 
 /**
- <p>The pricing plan for the specified map resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -2365,7 +2496,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A place index resource listed in your AWS account.</p>
- Required parameters: [CreateTime, DataSource, Description, IndexName, PricingPlan, UpdateTime]
+ Required parameters: [CreateTime, DataSource, Description, IndexName, UpdateTime]
  */
 @interface AWSLocationListPlaceIndexesResponseEntry : AWSModel
 
@@ -2391,7 +2522,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable indexName;
 
 /**
- <p>The pricing plan for the specified place index resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -2440,7 +2571,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>A route calculator resource listed in your AWS account.</p>
- Required parameters: [CalculatorName, CreateTime, DataSource, Description, PricingPlan, UpdateTime]
+ Required parameters: [CalculatorName, CreateTime, DataSource, Description, UpdateTime]
  */
 @interface AWSLocationListRouteCalculatorsResponseEntry : AWSModel
 
@@ -2466,7 +2597,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The pricing plan for the specified route calculator resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -2582,7 +2713,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 /**
  <p>Contains the tracker resource details.</p>
- Required parameters: [CreateTime, Description, PricingPlan, TrackerName, UpdateTime]
+ Required parameters: [CreateTime, Description, TrackerName, UpdateTime]
  */
 @interface AWSLocationListTrackersResponseEntry : AWSModel
 
@@ -2598,12 +2729,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The pricing plan for the specified tracker resource.</p><p>For additional details and restrictions on each pricing plan option, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>Always returns <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>The specified data provider for the tracker resource.</p>
+ <p>No longer used. Always returns an empty string.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -2627,7 +2758,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 
 
 /**
- <p>Specifies the map style selected from an available data provider.</p><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri map styles</a>:</p><ul><li><p><code>VectorEsriDarkGrayCanvas</code> – The Esri Dark Gray Canvas map style. A vector basemap with a dark gray, neutral background with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>RasterEsriImagery</code> – The Esri Imagery map style. A raster basemap that provides one meter or better satellite and aerial imagery in many parts of the world and lower resolution satellite imagery worldwide. </p></li><li><p><code>VectorEsriLightGrayCanvas</code> – The Esri Light Gray Canvas map style, which provides a detailed vector basemap with a light gray, neutral background style with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>VectorEsriTopographic</code> – The Esri Light map style, which provides a detailed vector basemap with a classic Esri map style.</p></li><li><p><code>VectorEsriStreets</code> – The Esri World Streets map style, which provides a detailed vector basemap for the world symbolized with a classic Esri street map style. The vector tile layer is similar in content and style to the World Street Map raster map.</p></li><li><p><code>VectorEsriNavigation</code> – The Esri World Navigation map style, which provides a detailed basemap for the world symbolized with a custom navigation map style that's designed for use during the day in mobile devices.</p></li></ul><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies map styles</a>:</p><ul><li><p><code>VectorHereBerlin</code> – The HERE Berlin map style is a high contrast detailed base map of the world that blends 3D and 2D rendering.</p><note><p>When using HERE as your data provider, and selecting the Style <code>VectorHereBerlin</code>, you may not use HERE Technologies maps for Asset Management. See the <a href="https://aws.amazon.com/service-terms/">AWS Service Terms</a> for Amazon Location Service.</p></note></li></ul>
+ <p>Specifies the map style selected from an available data provider.</p><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/esri.html">Esri map styles</a>:</p><ul><li><p><code>VectorEsriDarkGrayCanvas</code> – The Esri Dark Gray Canvas map style. A vector basemap with a dark gray, neutral background with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>RasterEsriImagery</code> – The Esri Imagery map style. A raster basemap that provides one meter or better satellite and aerial imagery in many parts of the world and lower resolution satellite imagery worldwide. </p></li><li><p><code>VectorEsriLightGrayCanvas</code> – The Esri Light Gray Canvas map style, which provides a detailed vector basemap with a light gray, neutral background style with minimal colors, labels, and features that's designed to draw attention to your thematic content. </p></li><li><p><code>VectorEsriTopographic</code> – The Esri Light map style, which provides a detailed vector basemap with a classic Esri map style.</p></li><li><p><code>VectorEsriStreets</code> – The Esri World Streets map style, which provides a detailed vector basemap for the world symbolized with a classic Esri street map style. The vector tile layer is similar in content and style to the World Street Map raster map.</p></li><li><p><code>VectorEsriNavigation</code> – The Esri World Navigation map style, which provides a detailed basemap for the world symbolized with a custom navigation map style that's designed for use during the day in mobile devices.</p></li></ul><p>Valid <a href="https://docs.aws.amazon.com/location/latest/developerguide/HERE.html">HERE Technologies map styles</a>:</p><ul><li><p><code>VectorHereBerlin</code> – The HERE Berlin map style is a high contrast detailed base map of the world that blends 3D and 2D rendering.</p></li><li><p><code>VectorHereExplore</code> – A default HERE map style containing a neutral, global map and its features including roads, buildings, landmarks, and water features. It also now includes a fully designed map of Japan.</p></li><li><p><code>VectorHereExploreTruck</code> – A global map containing truck restrictions and attributes (e.g. width / height / HAZMAT) symbolized with highlighted segments and icons on top of HERE Explore to support use cases within transport and logistics.</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable style;
 
@@ -2772,6 +2903,48 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
  <p>The timestamp for when the geofence was last updated in <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code></p>
  */
 @property (nonatomic, strong) NSDate * _Nullable updateTime;
+
+@end
+
+/**
+ <p>The result for the calculated route of one <code>DeparturePosition</code><code>DestinationPosition</code> pair.</p>
+ */
+@interface AWSLocationRouteMatrixEntry : AWSModel
+
+
+/**
+ <p>The total distance of travel for the route.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable distance;
+
+/**
+ <p>The expected duration of travel for the route.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable durationSeconds;
+
+/**
+ <p>An error corresponding to the calculation of a route between the <code>DeparturePosition</code> and <code>DestinationPosition</code>.</p>
+ */
+@property (nonatomic, strong) AWSLocationRouteMatrixEntryError * _Nullable error;
+
+@end
+
+/**
+ <p>An error corresponding to the calculation of a route between the <code>DeparturePosition</code> and <code>DestinationPosition</code>.</p><p>The error code can be one of the following:</p><ul><li><p><code>RouteNotFound</code> - Unable to find a valid route with the given parameters.</p></li></ul><ul><li><p><code>RouteTooLong</code> - Route calculation went beyond the maximum size of a route and was terminated before completion.</p></li></ul><ul><li><p><code>PositionsNotFound</code> - One or more of the input positions were not found on the route network.</p></li></ul><ul><li><p><code>DestinationPositionNotFound</code> - The destination position was not found on the route network.</p></li></ul><ul><li><p><code>DeparturePositionNotFound</code> - The departure position was not found on the route network.</p></li></ul><ul><li><p><code>OtherValidationError</code> - The given inputs were not valid or a route was not found. More information is given in the error <code>Message</code></p></li></ul>
+ Required parameters: [Code]
+ */
+@interface AWSLocationRouteMatrixEntryError : AWSModel
+
+
+/**
+ <p>The type of error which occurred for the route calculation.</p>
+ */
+@property (nonatomic, assign) AWSLocationRouteMatrixErrorCode code;
+
+/**
+ <p>A message about the error that occurred for the route calculation.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable message;
 
 @end
 
@@ -3290,12 +3463,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>Updates the pricing plan for the geofence collection.</p><p>For more information about each pricing plan option restrictions, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>Updates the data provider for the geofence collection. </p><p>A required value for the following pricing plans: <code>MobileAssetTracking</code>| <code>MobileAssetManagement</code></p><p>For more information about <a href="https://aws.amazon.com/location/data-providers/">data providers</a> and <a href="https://aws.amazon.com/location/pricing/">pricing plans</a>, see the Amazon Location Service product page.</p><note><p>This can only be updated when updating the <code>PricingPlan</code> in the same request.</p><p>Amazon Location Service uses <code>PricingPlanDataSource</code> to calculate billing for your geofence collection. Your data won't be shared with the data provider, and will remain in your AWS account and Region unless you move it.</p></note>
+ <p>This parameter is no longer used.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 
@@ -3341,7 +3514,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable mapName;
 
 /**
- <p>Updates the pricing plan for the map resource.</p><p>For more information about each pricing plan option restrictions, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -3392,7 +3565,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable indexName;
 
 /**
- <p>Updates the pricing plan for the place index resource.</p><p>For more information about each pricing plan option restrictions, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -3438,7 +3611,7 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>Updates the pricing plan for the route calculator resource.</p><p>For more information about each pricing plan option restrictions, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
@@ -3484,12 +3657,12 @@ typedef NS_ENUM(NSInteger, AWSLocationVehicleWeightUnit) {
 @property (nonatomic, assign) AWSLocationPositionFiltering positionFiltering;
 
 /**
- <p>Updates the pricing plan for the tracker resource.</p><p>For more information about each pricing plan option restrictions, see <a href="https://aws.amazon.com/location/pricing/">Amazon Location Service pricing</a>.</p>
+ <p>No longer used. If included, the only allowed value is <code>RequestBasedUsage</code>.</p>
  */
 @property (nonatomic, assign) AWSLocationPricingPlan pricingPlan;
 
 /**
- <p>Updates the data provider for the tracker resource. </p><p>A required value for the following pricing plans: <code>MobileAssetTracking</code>| <code>MobileAssetManagement</code></p><p>For more information about <a href="https://aws.amazon.com/location/data-providers/">data providers</a> and <a href="https://aws.amazon.com/location/pricing/">pricing plans</a>, see the Amazon Location Service product page</p><note><p>This can only be updated when updating the <code>PricingPlan</code> in the same request.</p><p>Amazon Location Service uses <code>PricingPlanDataSource</code> to calculate billing for your tracker resource. Your data won't be shared with the data provider, and will remain in your AWS account and Region unless you move it.</p></note>
+ <p>This parameter is no longer used.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable pricingPlanDataSource;
 

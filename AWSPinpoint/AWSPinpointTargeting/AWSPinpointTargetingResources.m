@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -6314,6 +6314,10 @@
           \"shape\": \"MapOf__string\",\
           \"locationName\": \"tags\",\
           \"documentation\": \"<p>A string-to-string map of key-value pairs that identifies the tags that are associated with the application. Each tag consists of a required tag key and an associated tag value.</p>\"\
+        },\
+        \"CreationDate\": {\
+          \"shape\": \"__string\",\
+          \"documentation\": \"<p>The date and time when the Application was created.</p>\"\
         }\
       },\
       \"documentation\": \"<p>Provides information about an application.</p>\",\
@@ -15649,6 +15653,10 @@
         \"RefreshOnSegmentUpdate\": {\
             \"shape\": \"__boolean\",\
             \"documentation\": \"<p>Specifies whether a journey should be refreshed on segment update.</p>\"\
+        },\
+        \"JourneyChannelSettings\": {\
+            \"shape\": \"JourneyChannelSettings\",\
+            \"documentation\": \"<p>The channel-specific configurations for the journey.</p>\"\
         }\
       },\
       \"documentation\": \"<p>Specifies the configuration and other settings for a journey.</p>\",\
