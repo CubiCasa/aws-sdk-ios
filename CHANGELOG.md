@@ -4,6 +4,66 @@
 
 -Features for next release
 
+## 2.27.10
+-Features for next release
+
+### Bug Fixes
+
+- **AWSCognito**
+  - Fix the parsing of providerName used in the loginMap to use the right value in case of customer endpoint is configured. (See [PR #4162](https://github.com/aws-amplify/aws-sdk-ios/pull/4162))
+
+### Misc. Updates
+
+- **Core**
+  - Update keychain accessibility level to `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` as default to keep the keychain value in the device. (See [PR #4159](https://github.com/aws-amplify/aws-sdk-ios/pull/4159))
+
+## 2.27.9
+
+### Bug Fixes
+
+- **AWSS3**
+
+  - fix: adds details to userInfo for NSError for TransferUtility (See [PR #4115](https://github.com/aws-amplify/aws-sdk-ios/pull/4115))
+  - fix: Reduces memory use for multipart uploads with `@autoreleasepool` to prevent excessive memory allocation (See [PR #4129](https://github.com/aws-amplify/aws-sdk-ios/pull/4129))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLocation
+  - AWSEC2
+
+## 2.27.8
+
+### Bug Fixes
+
+- **AWSPinpoint**
+  - fix: Updates Pinpoint to allow for push events for received and opened (See [PR #4105](https://github.com/aws-amplify/aws-sdk-ios/pull/4105))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSConnect
+  - AWSRekognition
+  - AWSKinesisVideo
+  - AWSKinesisVideoArchivedMedia
+  - AWSIoT
+
+## 2.27.7
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSLambda
+  - AWSIoT
+  - AWSConnect
+  - AWSIoTDataPlane
+  - AWSKMS
+  - AWSPolly
+  - AWSTextract
+  - AWSAutoScaling
+
 ## 2.27.6
 
 ### Misc. Updates

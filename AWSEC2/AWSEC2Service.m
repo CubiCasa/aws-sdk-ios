@@ -26,7 +26,7 @@
 #import "AWSEC2Serializer.h"
 
 static NSString *const AWSInfoEC2 = @"EC2";
-NSString *const AWSEC2SDKVersion = @"2.27.6";
+NSString *const AWSEC2SDKVersion = @"2.27.10";
 
 
 @interface AWSEC2ResponseSerializer : AWSXMLResponseSerializer
@@ -8814,6 +8814,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSEC2GetInstanceUefiDataResult *> *)getInstanceUefiData:(AWSEC2GetInstanceUefiDataRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"GetInstanceUefiData"
+                   outputClass:[AWSEC2GetInstanceUefiDataResult class]];
+}
+
+- (void)getInstanceUefiData:(AWSEC2GetInstanceUefiDataRequest *)request
+     completionHandler:(void (^)(AWSEC2GetInstanceUefiDataResult *response, NSError *error))completionHandler {
+    [[self getInstanceUefiData:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2GetInstanceUefiDataResult *> * _Nonnull task) {
+        AWSEC2GetInstanceUefiDataResult *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSEC2GetIpamAddressHistoryResult *> *)getIpamAddressHistory:(AWSEC2GetIpamAddressHistoryRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -9881,6 +9904,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSEC2ModifyInstanceEventWindowResult *response, NSError *error))completionHandler {
     [[self modifyInstanceEventWindow:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2ModifyInstanceEventWindowResult *> * _Nonnull task) {
         AWSEC2ModifyInstanceEventWindowResult *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSEC2ModifyInstanceMaintenanceOptionsResult *> *)modifyInstanceMaintenanceOptions:(AWSEC2ModifyInstanceMaintenanceOptionsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"ModifyInstanceMaintenanceOptions"
+                   outputClass:[AWSEC2ModifyInstanceMaintenanceOptionsResult class]];
+}
+
+- (void)modifyInstanceMaintenanceOptions:(AWSEC2ModifyInstanceMaintenanceOptionsRequest *)request
+     completionHandler:(void (^)(AWSEC2ModifyInstanceMaintenanceOptionsResult *response, NSError *error))completionHandler {
+    [[self modifyInstanceMaintenanceOptions:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2ModifyInstanceMaintenanceOptionsResult *> * _Nonnull task) {
+        AWSEC2ModifyInstanceMaintenanceOptionsResult *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
