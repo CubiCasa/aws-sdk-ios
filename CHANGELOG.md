@@ -4,8 +4,56 @@
 
 -Features for next release
 
+## 2.27.13
+
+### Bug Fixes
+
+- **AWSPinpoint**
+  - Migrate key-value storage from NSUserdefaults to Keychain (See [PR #4223](https://github.com/aws-amplify/aws-sdk-ios/pull/4223))
+  
+- **AWSMobileClient**
+  - Fixes duplicated callbacks when getToken fails on device operations (See https://github.com/aws-amplify/aws-sdk-ios/pull/4229)
+  
+- **AWSIoT**
+  - Adds support for handling certificate with certificateId (See [PR #4219](https://github.com/aws-amplify/aws-sdk-ios/pull/4219))
+  - Eliminates Dispatch Semaphore in MQTT internal code [PR #4211](https://github.com/aws-amplify/aws-sdk-ios/pull/4211)
+
+## 2.27.12
+
+### Bug Fixes
+
+- **AWSMobileClient**
+- fix(AWSMobileClient): AWSMobileclient will refresh the token before making user attribute calls (See [PR #4215](https://github.com/aws-amplify/aws-sdk-ios/pull/4215))
+- fix(AWSMobileClient): Change logic to handle weak reference of token operations (See [PR #4205](https://github.com/aws-amplify/aws-sdk-ios/pull/4205))
+
+## 2.27.11
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - fix(awsmobileclient): Makes fetch aws credentials serial with the rest of the calls. (See [PR #4202](https://github.com/aws-amplify/aws-sdk-ios/pull/4202))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLambda
+  - AWSIoT
+  - AWSEC2
+  - AWSPolly
+  - AWSElasticLoadBalancingv2
+  - AWSTranslate
+  - AWSSTS
+  - AWSRekognition
+  - AWSKMS
+  - AWSComprehend
+  - AWSCloudWatchLogs
+  - AWSCognitoIdentityProvider
+  - AWSTranscribe
+  - AWSConnect
+  - AWSChimeSDKMessaging
+  - AWSDynamoDB
+
 ## 2.27.10
--Features for next release
 
 ### Bug Fixes
 
@@ -13,7 +61,6 @@
   - Fix the parsing of providerName used in the loginMap to use the right value in case of customer endpoint is configured. (See [PR #4162](https://github.com/aws-amplify/aws-sdk-ios/pull/4162))
 
 ### Misc. Updates
-
 - **Core**
   - Update keychain accessibility level to `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` as default to keep the keychain value in the device. (See [PR #4159](https://github.com/aws-amplify/aws-sdk-ios/pull/4159))
 
@@ -31,6 +78,8 @@
 - Model updates for the following services
   - AWSLocation
   - AWSEC2
+  - AWSSTS
+  - AWSRekognition
 
 ## 2.27.8
 
