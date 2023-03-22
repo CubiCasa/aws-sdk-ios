@@ -1,11 +1,101 @@
+---
+
+MOVE THIS SECTION TO THE CORRECT LOCATION
+
+### Misc. Updates
+
+- Model updates for the following services
+---AWSEC2
 # AWS Mobile SDK for iOS CHANGELOG
+
 ## Unreleased
 
 ### Misc. Updates
 
 - Model updates for the following services
-  - AWSCloudWatchLogs
+  - AWSComprehend
   - AWSConnect
+  - AWSDynamoDB
+  - AWSEC2  
+  - AWSIoT
+  - AWSLocation
+  - AWSTranscribe
+
+## 2.30.4
+
+### Bug Fixes
+
+- **AWSCore**
+    - Add sync control to avoid crash during concurrent credential requests
+
+## 2.30.3
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Fixed a thread safety issue in `AWSMobileClient.getTokens(_:)` that could result in a crash. (See [PR #4563](https://github.com/aws-amplify/aws-sdk-ios/pull/4563))
+
+- **AWSIoT**
+    - Fixed a potential point of priority inversion, resolving new Xcode 14 threat performance warning. (See [PR #4575](https://github.com/aws-amplify/aws-sdk-ios/pull/4575))
+
+### Misc. Updates
+
+- **AWSMobileClient**
+    - Add validation for the initial state of AWSMobileClient (See [PR #4547](https://github.com/aws-amplify/aws-sdk-ios/pull/4547))
+
+- **AWSS3**
+    - Fixing the integration tests by using correct value for AWSS3ServerSideEncryption (See [PR #4592](https://github.com/aws-amplify/aws-sdk-ios/pull/4592))
+    
+- Model updates for the following services
+  - AWSEC2
+  - AWSKMS
+  - AWSLambda
+  - AWSConnect
+  - AWSLocation
+
+## 2.30.2
+
+### Bug Fixes
+
+- **AWSPinpoint**
+  - Fixed a deadlock that happened when `AWSPinpointAnalyticsClient.submitEvents` was called from different threads at the same time. (See [PR #4558](https://github.com/aws-amplify/aws-sdk-ios/pull/4558))
+
+### Misc. Updates
+- Model updates for the following services
+  - AWSSTS
+  - AWSSageMakerRuntime
+  - AWSIoT
+  - AWSElasticLoadBalancingv2
+  - AWSConnect
+  - AWSAutoScaling
+  - AWSSNS
+  - AWSPolly
+  - AWSEC2
+
+## 2.30.1
+
+### Misc. Updates
+
+- **Auth**
+  - Added migration of keychain to the current accessibility level set for different Auth SDK. This will enabled keychain items that are stored in different accessibility level to get fixed to the current accessibility. (See [PR #4516](https://github.com/aws-amplify/aws-sdk-ios/pull/4516))
+
+
+## 2.30.0
+
+### New features
+- **AWSCore**
+  - Support for `ap-southeast-4` - Asia Pacific (Melbourne) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+
+### Misc. Updates
+- Model updates for the following services
+  -AWSCloudWatchLogs
+  -AWSConnect
+  -AWSConnectParticipant
+  -AWSComprehend
+  -AWSEC2
+  -AWSLambda
+  -AWSLocation
 
 ## 2.29.1
 
