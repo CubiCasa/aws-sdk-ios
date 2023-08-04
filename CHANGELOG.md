@@ -1,19 +1,138 @@
-# AWS Mobile SDK for iOS CHANGELOG
+---
 
-## Unreleased
+MOVE THIS SECTION TO THE CORRECT LOCATION
 
 ### Misc. Updates
 
 - Model updates for the following services
+---AWSEC2
+# AWS Mobile SDK for iOS CHANGELOG
+
+## Unreleased
+
+-Features for next release
+
+## 2.33.3
+
+### New features
+- **AWSCore**
+  - Support for `il-central-1` - Israel (Tel Aviv) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+## 2.33.2  
+
+### Bug Fixes
+- **AWSAuthUI**
+  - Fixed spacing and color issues in `AWSSignInViewController` when displaying social providers.
+
+- **AWSFacebookSignIn** & **AWSAuthGoogleSignIn**
+  - Added support for Dark Mode colors
+
+- **AWSTranscribeStreaming**
+  - Fixed assigning of host for CN regions in AWSTranscribeStreaming
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSCloudWatchLogs
+  - AWSCognitoIdentityProvider
+  - AWSEC2
+  - AWSLocation
+  - AWSConnect
+  - AWSTranslate
+  - AWSTranscribe
+  - AWSCognitoIdentityProvider
+
+## 2.33.1
+
+### Misc. Updates
+- **AWSComprehend**
+  - Updating text used in the `testDetectSentimentNeutral` integration test.
+
+- Model updates for the following services
+  - AWSChimeSDKIdentity
+  - AWSChimeSDKMessaging
+  - AWSCloudWatchLogs
+  - AWSConnect
+  - AWSDynamoDB
+  - AWSEC2
+  - AWSIoT
+  - AWSIoTDataPlane
+  - AWSKinesisVideo
+  - AWSKMS
+  - AWSLambda
+  - AWSLocation
+  - AWSPinpoint
+  - AWSPolly
+  - AWSRekognition
+  - AWSSQS
+  - AWSSTS
+  - AWSTranslate
+
+### Bug Fixes
+- **AWSAuthUI**
+  - Fix ability to hide keyboard in `AWSSignInViewController`, using `keyboardDismissMode`
+  - Fix black navigation bar in `AWSSignInViewController`, using view controllers option to 'Extend edges Under Opaque Bars'.  
+   [Issue #2321](https://github.com/aws-amplify/aws-sdk-ios/issues/2321)
+
+## 2.33.0
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSConnect
+  - AWSSTS
+
+## 2.32.0
+
+### New features
+- **AWSKinesisVideoWebRTCStorage**
+  - Adding new framework for Kinesis Video WebRTC Storage
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSSQS
+  - AWSEC2
+  - **Breaking Changes** to AWSChimeSDKMessaging
+  - AWSConnect
+  - AWSPinpoint
+  - AWSLambda
+  - AWSRekognition
+  - AWSIoT
+  - AWSKMS
+
+## 2.31.1
+
+### Bug Fixes
+- **AWSS3**
+  - Increase speed of foreground uploads by specifying `NetworkServiceType`   
+
+## 2.31.0
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Handling AWSMobileClient state issues gracefully handled gracefully
+  
+- **AWSIot**
+  - Include the certificate tag in Keychain query to look up identity
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSAutoScaling
   - AWSComprehend
   - AWSConnect
   - AWSDynamoDB
   - AWSEC2  
   - AWSIoT
+  - AWSLambda
   - AWSLocation
   - AWSTranscribe
   - AWSChimeSDKIdentity
   - AWSChimeSDKMessaging
+  - AWSKinesisVideoWebRTCStorage
+  - AWSRekognition
   - AWSSageMakerRuntime
   - AWSTextract
   - AWSConnectParticipant
