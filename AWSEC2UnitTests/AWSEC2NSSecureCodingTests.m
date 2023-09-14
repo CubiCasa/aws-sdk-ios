@@ -432,6 +432,7 @@
 - (void) test_AWSEC2DeleteIpamScopeRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeleteIpamScopeResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeleteKeyPairRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DeleteKeyPairResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeleteLaunchTemplateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeleteLaunchTemplateResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeleteLaunchTemplateVersionsRequest API_AVAILABLE(ios(11));
@@ -1703,6 +1704,7 @@
 - (void) test_AWSEC2SubnetAssociation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SubnetCidrBlockState API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SubnetCidrReservation API_AVAILABLE(ios(11));
+- (void) test_AWSEC2SubnetConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SubnetIpv6CidrBlockAssociation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2Subscription API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SuccessfulInstanceCreditSpecificationItem API_AVAILABLE(ios(11));
@@ -3507,6 +3509,10 @@
 
 - (void) test_AWSEC2DeleteKeyPairRequest {
     [self validateSecureCodingForClass:[AWSEC2DeleteKeyPairRequest class]];
+}
+
+- (void) test_AWSEC2DeleteKeyPairResult {
+    [self validateSecureCodingForClass:[AWSEC2DeleteKeyPairResult class]];
 }
 
 - (void) test_AWSEC2DeleteLaunchTemplateRequest {
@@ -8591,6 +8597,10 @@
 
 - (void) test_AWSEC2SubnetCidrReservation {
     [self validateSecureCodingForClass:[AWSEC2SubnetCidrReservation class]];
+}
+
+- (void) test_AWSEC2SubnetConfiguration {
+    [self validateSecureCodingForClass:[AWSEC2SubnetConfiguration class]];
 }
 
 - (void) test_AWSEC2SubnetIpv6CidrBlockAssociation {

@@ -26,7 +26,7 @@
 #import "AWSEC2Serializer.h"
 
 static NSString *const AWSInfoEC2 = @"EC2";
-NSString *const AWSEC2SDKVersion = @"2.33.3";
+NSString *const AWSEC2SDKVersion = @"2.33.4";
 
 
 @interface AWSEC2ResponseSerializer : AWSXMLResponseSerializer
@@ -3803,22 +3803,23 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
-- (AWSTask *)deleteKeyPair:(AWSEC2DeleteKeyPairRequest *)request {
+- (AWSTask<AWSEC2DeleteKeyPairResult *> *)deleteKeyPair:(AWSEC2DeleteKeyPairRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
                      URLString:@""
                   targetPrefix:@""
                  operationName:@"DeleteKeyPair"
-                   outputClass:nil];
+                   outputClass:[AWSEC2DeleteKeyPairResult class]];
 }
 
 - (void)deleteKeyPair:(AWSEC2DeleteKeyPairRequest *)request
-     completionHandler:(void (^)(NSError *error))completionHandler {
-    [[self deleteKeyPair:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+     completionHandler:(void (^)(AWSEC2DeleteKeyPairResult *response, NSError *error))completionHandler {
+    [[self deleteKeyPair:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2DeleteKeyPairResult *> * _Nonnull task) {
+        AWSEC2DeleteKeyPairResult *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
-            completionHandler(error);
+            completionHandler(result, error);
         }
 
         return nil;
