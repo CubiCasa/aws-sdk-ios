@@ -69,6 +69,8 @@
 - (void) test_AWSEC2AnalysisSecurityGroupRule API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ApplySecurityGroupsToClientVpnTargetNetworkRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ApplySecurityGroupsToClientVpnTargetNetworkResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2AsnAssociation API_AVAILABLE(ios(11));
+- (void) test_AWSEC2AsnAuthorizationContext API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssignIpv6AddressesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssignIpv6AddressesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssignPrivateIpAddressesRequest API_AVAILABLE(ios(11));
@@ -87,6 +89,8 @@
 - (void) test_AWSEC2AssociateIamInstanceProfileResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssociateInstanceEventWindowRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssociateInstanceEventWindowResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2AssociateIpamByoasnRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2AssociateIpamByoasnResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssociateIpamResourceDiscoveryRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssociateIpamResourceDiscoveryResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AssociateNatGatewayAddressRequest API_AVAILABLE(ios(11));
@@ -141,6 +145,7 @@
 - (void) test_AWSEC2BundleInstanceResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2BundleTask API_AVAILABLE(ios(11));
 - (void) test_AWSEC2BundleTaskError API_AVAILABLE(ios(11));
+- (void) test_AWSEC2Byoasn API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ByoipCidr API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CancelBundleTaskRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CancelBundleTaskResult API_AVAILABLE(ios(11));
@@ -166,6 +171,7 @@
 - (void) test_AWSEC2CancelSpotInstanceRequestsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CancelledSpotInstanceRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CapacityAllocation API_AVAILABLE(ios(11));
+- (void) test_AWSEC2CapacityBlockOffering API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CapacityReservation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CapacityReservationFleet API_AVAILABLE(ios(11));
 - (void) test_AWSEC2CapacityReservationFleetCancellationState API_AVAILABLE(ios(11));
@@ -211,6 +217,10 @@
 - (void) test_AWSEC2ConnectionLogOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ConnectionLogResponseOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ConnectionNotification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ConnectionTrackingConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ConnectionTrackingSpecification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ConnectionTrackingSpecificationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ConnectionTrackingSpecificationResponse API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ConversionTask API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ReplicateFpgaImageRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ReplicateFpgaImageResult API_AVAILABLE(ios(11));
@@ -532,6 +542,8 @@
 - (void) test_AWSEC2DeleteVpnGatewayRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeprovisionByoipCidrRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeprovisionByoipCidrResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DeprovisionIpamByoasnRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DeprovisionIpamByoasnResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeprovisionIpamPoolCidrRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeprovisionIpamPoolCidrResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DeprovisionPublicIpv4PoolCidrRequest API_AVAILABLE(ios(11));
@@ -562,6 +574,8 @@
 - (void) test_AWSEC2DescribeBundleTasksResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeByoipCidrsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeByoipCidrsResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeCapacityBlockOfferingsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeCapacityBlockOfferingsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeCapacityReservationFleetsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeCapacityReservationFleetsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeCapacityReservationsRequest API_AVAILABLE(ios(11));
@@ -646,6 +660,8 @@
 - (void) test_AWSEC2DescribeInstanceEventWindowsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInstanceStatusRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInstanceStatusResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeInstanceTopologyRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeInstanceTopologyResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInstanceTypeOfferingsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInstanceTypeOfferingsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInstanceTypesRequest API_AVAILABLE(ios(11));
@@ -654,6 +670,8 @@
 - (void) test_AWSEC2DescribeInstancesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInternetGatewaysRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeInternetGatewaysResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeIpamByoasnRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeIpamByoasnResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeIpamPoolsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeIpamPoolsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeIpamResourceDiscoveriesRequest API_AVAILABLE(ios(11));
@@ -684,6 +702,8 @@
 - (void) test_AWSEC2DescribeLocalGatewayVirtualInterfacesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeLocalGatewaysRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeLocalGatewaysResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeLockedSnapshotsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeLockedSnapshotsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeManagedPrefixListsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeManagedPrefixListsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeMovingAddressesRequest API_AVAILABLE(ios(11));
@@ -869,10 +889,14 @@
 - (void) test_AWSEC2DisableImageBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageDeprecationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageDeprecationResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableImageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableImageResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableIpamOrganizationAdminAccountRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableIpamOrganizationAdminAccountResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableSerialConsoleAccessRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableSerialConsoleAccessResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableSnapshotBlockPublicAccessRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableSnapshotBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableTransitGatewayRouteTablePropagationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableTransitGatewayRouteTablePropagationResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableVgwRoutePropagationRequest API_AVAILABLE(ios(11));
@@ -889,6 +913,8 @@
 - (void) test_AWSEC2DisassociateIamInstanceProfileResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisassociateInstanceEventWindowRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisassociateInstanceEventWindowResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisassociateIpamByoasnRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisassociateIpamByoasnResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisassociateIpamResourceDiscoveryRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisassociateIpamResourceDiscoveryResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisassociateNatGatewayAddressRequest API_AVAILABLE(ios(11));
@@ -931,7 +957,9 @@
 - (void) test_AWSEC2ElasticInferenceAccelerator API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ElasticInferenceAcceleratorAssociation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnaSrdSpecification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnaSrdSpecificationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnaSrdUdpSpecification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnaSrdUdpSpecificationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableAddressTransferRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableAddressTransferResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableAwsNetworkPerformanceMetricSubscriptionRequest API_AVAILABLE(ios(11));
@@ -950,12 +978,16 @@
 - (void) test_AWSEC2EnableImageBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageDeprecationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageDeprecationResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableImageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableImageResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableIpamOrganizationAdminAccountRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableIpamOrganizationAdminAccountResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableReachabilityAnalyzerOrganizationSharingRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableReachabilityAnalyzerOrganizationSharingResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableSerialConsoleAccessRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableSerialConsoleAccessResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableSnapshotBlockPublicAccessRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableSnapshotBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableTransitGatewayRouteTablePropagationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableTransitGatewayRouteTablePropagationResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableVgwRoutePropagationRequest API_AVAILABLE(ios(11));
@@ -1049,6 +1081,8 @@
 - (void) test_AWSEC2GetIpamAddressHistoryResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetIpamDiscoveredAccountsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetIpamDiscoveredAccountsResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetIpamDiscoveredPublicAddressesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetIpamDiscoveredPublicAddressesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetIpamDiscoveredResourceCidrsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetIpamDiscoveredResourceCidrsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetIpamPoolAllocationsRequest API_AVAILABLE(ios(11));
@@ -1071,8 +1105,12 @@
 - (void) test_AWSEC2GetPasswordDataResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetReservedInstancesExchangeQuoteRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetReservedInstancesExchangeQuoteResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetSecurityGroupsForVpcRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetSecurityGroupsForVpcResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetSerialConsoleAccessStatusRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetSerialConsoleAccessStatusResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetSnapshotBlockPublicAccessStateRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetSnapshotBlockPublicAccessStateResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetSpotPlacementScoresRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetSpotPlacementScoresResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetSubnetCidrReservationsRequest API_AVAILABLE(ios(11));
@@ -1149,6 +1187,8 @@
 - (void) test_AWSEC2InferenceDeviceInfo API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InferenceDeviceMemoryInfo API_AVAILABLE(ios(11));
 - (void) test_AWSEC2Instance API_AVAILABLE(ios(11));
+- (void) test_AWSEC2InstanceAttachmentEnaSrdSpecification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2InstanceAttachmentEnaSrdUdpSpecification API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceAttribute API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceBlockDeviceMapping API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceBlockDeviceMappingSpecification API_AVAILABLE(ios(11));
@@ -1192,6 +1232,7 @@
 - (void) test_AWSEC2InstanceStatusSummary API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceStorageInfo API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceTagNotificationAttribute API_AVAILABLE(ios(11));
+- (void) test_AWSEC2InstanceTopology API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceTypeInfo API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceTypeInfoFromInstanceRequirements API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceTypeOffering API_AVAILABLE(ios(11));
@@ -1205,6 +1246,7 @@
 - (void) test_AWSEC2IpamAddressHistoryRecord API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamCidrAuthorizationContext API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamDiscoveredAccount API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamDiscoveredPublicAddress API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamDiscoveredResourceCidr API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamDiscoveryFailureReason API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamOperatingRegion API_AVAILABLE(ios(11));
@@ -1212,6 +1254,11 @@
 - (void) test_AWSEC2IpamPoolAllocation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamPoolCidr API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamPoolCidrFailureReason API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamPoolSourceResource API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamPoolSourceResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamPublicAddressSecurityGroup API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamPublicAddressTag API_AVAILABLE(ios(11));
+- (void) test_AWSEC2IpamPublicAddressTags API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamResourceCidr API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamResourceDiscovery API_AVAILABLE(ios(11));
 - (void) test_AWSEC2IpamResourceDiscoveryAssociation API_AVAILABLE(ios(11));
@@ -1246,6 +1293,8 @@
 - (void) test_AWSEC2LaunchTemplateEbsBlockDeviceRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateElasticInferenceAccelerator API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateElasticInferenceAcceleratorResponse API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LaunchTemplateEnaSrdSpecification API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LaunchTemplateEnaSrdUdpSpecification API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateEnclaveOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateEnclaveOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateHibernationOptions API_AVAILABLE(ios(11));
@@ -1292,6 +1341,9 @@
 - (void) test_AWSEC2LocalGatewayRouteTableVpcAssociation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LocalGatewayVirtualInterface API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LocalGatewayVirtualInterfaceGroup API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LockSnapshotRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LockSnapshotResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LockedSnapshotsInfo API_AVAILABLE(ios(11));
 - (void) test_AWSEC2MaintenanceDetails API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ManagedPrefixList API_AVAILABLE(ios(11));
 - (void) test_AWSEC2MemoryGiBPerVCpu API_AVAILABLE(ios(11));
@@ -1395,6 +1447,7 @@
 - (void) test_AWSEC2ModifyVerifiedAccessInstanceLoggingConfigurationResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyVerifiedAccessInstanceRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyVerifiedAccessInstanceResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ModifyVerifiedAccessTrustProviderDeviceOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyVerifiedAccessTrustProviderOidcOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyVerifiedAccessTrustProviderRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyVerifiedAccessTrustProviderResult API_AVAILABLE(ios(11));
@@ -1511,6 +1564,8 @@
 - (void) test_AWSEC2PropagatingVgw API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ProvisionByoipCidrRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ProvisionByoipCidrResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ProvisionIpamByoasnRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ProvisionIpamByoasnResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ProvisionIpamPoolCidrRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ProvisionIpamPoolCidrResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ProvisionPublicIpv4PoolCidrRequest API_AVAILABLE(ios(11));
@@ -1520,6 +1575,8 @@
 - (void) test_AWSEC2PublicIpv4Pool API_AVAILABLE(ios(11));
 - (void) test_AWSEC2PublicIpv4PoolRange API_AVAILABLE(ios(11));
 - (void) test_AWSEC2Purchase API_AVAILABLE(ios(11));
+- (void) test_AWSEC2PurchaseCapacityBlockRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2PurchaseCapacityBlockResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2PurchaseHostReservationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2PurchaseHostReservationResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2PurchaseRequest API_AVAILABLE(ios(11));
@@ -1654,6 +1711,7 @@
 - (void) test_AWSEC2SearchTransitGatewayRoutesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SearchTransitGatewayRoutesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SecurityGroup API_AVAILABLE(ios(11));
+- (void) test_AWSEC2SecurityGroupForVpc API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SecurityGroupIdentifier API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SecurityGroupReference API_AVAILABLE(ios(11));
 - (void) test_AWSEC2SecurityGroupRule API_AVAILABLE(ios(11));
@@ -1789,6 +1847,8 @@
 - (void) test_AWSEC2UnassignPrivateIpAddressesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2UnassignPrivateNatGatewayAddressRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2UnassignPrivateNatGatewayAddressResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2UnlockSnapshotRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2UnlockSnapshotResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2UnmonitorInstancesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2UnmonitorInstancesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2UnsuccessfulInstanceCreditSpecificationItem API_AVAILABLE(ios(11));
@@ -1824,6 +1884,8 @@
 - (void) test_AWSEC2VerifiedAccessLogS3Destination API_AVAILABLE(ios(11));
 - (void) test_AWSEC2VerifiedAccessLogS3DestinationOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2VerifiedAccessLogs API_AVAILABLE(ios(11));
+- (void) test_AWSEC2VerifiedAccessSseSpecificationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2VerifiedAccessSseSpecificationResponse API_AVAILABLE(ios(11));
 - (void) test_AWSEC2VerifiedAccessTrustProvider API_AVAILABLE(ios(11));
 - (void) test_AWSEC2VerifiedAccessTrustProviderCondensed API_AVAILABLE(ios(11));
 - (void) test_AWSEC2VgwTelemetry API_AVAILABLE(ios(11));
@@ -2065,6 +2127,14 @@
     [self validateSecureCodingForClass:[AWSEC2ApplySecurityGroupsToClientVpnTargetNetworkResult class]];
 }
 
+- (void) test_AWSEC2AsnAssociation {
+    [self validateSecureCodingForClass:[AWSEC2AsnAssociation class]];
+}
+
+- (void) test_AWSEC2AsnAuthorizationContext {
+    [self validateSecureCodingForClass:[AWSEC2AsnAuthorizationContext class]];
+}
+
 - (void) test_AWSEC2AssignIpv6AddressesRequest {
     [self validateSecureCodingForClass:[AWSEC2AssignIpv6AddressesRequest class]];
 }
@@ -2135,6 +2205,14 @@
 
 - (void) test_AWSEC2AssociateInstanceEventWindowResult {
     [self validateSecureCodingForClass:[AWSEC2AssociateInstanceEventWindowResult class]];
+}
+
+- (void) test_AWSEC2AssociateIpamByoasnRequest {
+    [self validateSecureCodingForClass:[AWSEC2AssociateIpamByoasnRequest class]];
+}
+
+- (void) test_AWSEC2AssociateIpamByoasnResult {
+    [self validateSecureCodingForClass:[AWSEC2AssociateIpamByoasnResult class]];
 }
 
 - (void) test_AWSEC2AssociateIpamResourceDiscoveryRequest {
@@ -2353,6 +2431,10 @@
     [self validateSecureCodingForClass:[AWSEC2BundleTaskError class]];
 }
 
+- (void) test_AWSEC2Byoasn {
+    [self validateSecureCodingForClass:[AWSEC2Byoasn class]];
+}
+
 - (void) test_AWSEC2ByoipCidr {
     [self validateSecureCodingForClass:[AWSEC2ByoipCidr class]];
 }
@@ -2451,6 +2533,10 @@
 
 - (void) test_AWSEC2CapacityAllocation {
     [self validateSecureCodingForClass:[AWSEC2CapacityAllocation class]];
+}
+
+- (void) test_AWSEC2CapacityBlockOffering {
+    [self validateSecureCodingForClass:[AWSEC2CapacityBlockOffering class]];
 }
 
 - (void) test_AWSEC2CapacityReservation {
@@ -2631,6 +2717,22 @@
 
 - (void) test_AWSEC2ConnectionNotification {
     [self validateSecureCodingForClass:[AWSEC2ConnectionNotification class]];
+}
+
+- (void) test_AWSEC2ConnectionTrackingConfiguration {
+    [self validateSecureCodingForClass:[AWSEC2ConnectionTrackingConfiguration class]];
+}
+
+- (void) test_AWSEC2ConnectionTrackingSpecification {
+    [self validateSecureCodingForClass:[AWSEC2ConnectionTrackingSpecification class]];
+}
+
+- (void) test_AWSEC2ConnectionTrackingSpecificationRequest {
+    [self validateSecureCodingForClass:[AWSEC2ConnectionTrackingSpecificationRequest class]];
+}
+
+- (void) test_AWSEC2ConnectionTrackingSpecificationResponse {
+    [self validateSecureCodingForClass:[AWSEC2ConnectionTrackingSpecificationResponse class]];
 }
 
 - (void) test_AWSEC2ConversionTask {
@@ -3917,6 +4019,14 @@
     [self validateSecureCodingForClass:[AWSEC2DeprovisionByoipCidrResult class]];
 }
 
+- (void) test_AWSEC2DeprovisionIpamByoasnRequest {
+    [self validateSecureCodingForClass:[AWSEC2DeprovisionIpamByoasnRequest class]];
+}
+
+- (void) test_AWSEC2DeprovisionIpamByoasnResult {
+    [self validateSecureCodingForClass:[AWSEC2DeprovisionIpamByoasnResult class]];
+}
+
 - (void) test_AWSEC2DeprovisionIpamPoolCidrRequest {
     [self validateSecureCodingForClass:[AWSEC2DeprovisionIpamPoolCidrRequest class]];
 }
@@ -4035,6 +4145,14 @@
 
 - (void) test_AWSEC2DescribeByoipCidrsResult {
     [self validateSecureCodingForClass:[AWSEC2DescribeByoipCidrsResult class]];
+}
+
+- (void) test_AWSEC2DescribeCapacityBlockOfferingsRequest {
+    [self validateSecureCodingForClass:[AWSEC2DescribeCapacityBlockOfferingsRequest class]];
+}
+
+- (void) test_AWSEC2DescribeCapacityBlockOfferingsResult {
+    [self validateSecureCodingForClass:[AWSEC2DescribeCapacityBlockOfferingsResult class]];
 }
 
 - (void) test_AWSEC2DescribeCapacityReservationFleetsRequest {
@@ -4373,6 +4491,14 @@
     [self validateSecureCodingForClass:[AWSEC2DescribeInstanceStatusResult class]];
 }
 
+- (void) test_AWSEC2DescribeInstanceTopologyRequest {
+    [self validateSecureCodingForClass:[AWSEC2DescribeInstanceTopologyRequest class]];
+}
+
+- (void) test_AWSEC2DescribeInstanceTopologyResult {
+    [self validateSecureCodingForClass:[AWSEC2DescribeInstanceTopologyResult class]];
+}
+
 - (void) test_AWSEC2DescribeInstanceTypeOfferingsRequest {
     [self validateSecureCodingForClass:[AWSEC2DescribeInstanceTypeOfferingsRequest class]];
 }
@@ -4403,6 +4529,14 @@
 
 - (void) test_AWSEC2DescribeInternetGatewaysResult {
     [self validateSecureCodingForClass:[AWSEC2DescribeInternetGatewaysResult class]];
+}
+
+- (void) test_AWSEC2DescribeIpamByoasnRequest {
+    [self validateSecureCodingForClass:[AWSEC2DescribeIpamByoasnRequest class]];
+}
+
+- (void) test_AWSEC2DescribeIpamByoasnResult {
+    [self validateSecureCodingForClass:[AWSEC2DescribeIpamByoasnResult class]];
 }
 
 - (void) test_AWSEC2DescribeIpamPoolsRequest {
@@ -4523,6 +4657,14 @@
 
 - (void) test_AWSEC2DescribeLocalGatewaysResult {
     [self validateSecureCodingForClass:[AWSEC2DescribeLocalGatewaysResult class]];
+}
+
+- (void) test_AWSEC2DescribeLockedSnapshotsRequest {
+    [self validateSecureCodingForClass:[AWSEC2DescribeLockedSnapshotsRequest class]];
+}
+
+- (void) test_AWSEC2DescribeLockedSnapshotsResult {
+    [self validateSecureCodingForClass:[AWSEC2DescribeLockedSnapshotsResult class]];
 }
 
 - (void) test_AWSEC2DescribeManagedPrefixListsRequest {
@@ -5265,6 +5407,14 @@
     [self validateSecureCodingForClass:[AWSEC2DisableImageDeprecationResult class]];
 }
 
+- (void) test_AWSEC2DisableImageRequest {
+    [self validateSecureCodingForClass:[AWSEC2DisableImageRequest class]];
+}
+
+- (void) test_AWSEC2DisableImageResult {
+    [self validateSecureCodingForClass:[AWSEC2DisableImageResult class]];
+}
+
 - (void) test_AWSEC2DisableIpamOrganizationAdminAccountRequest {
     [self validateSecureCodingForClass:[AWSEC2DisableIpamOrganizationAdminAccountRequest class]];
 }
@@ -5279,6 +5429,14 @@
 
 - (void) test_AWSEC2DisableSerialConsoleAccessResult {
     [self validateSecureCodingForClass:[AWSEC2DisableSerialConsoleAccessResult class]];
+}
+
+- (void) test_AWSEC2DisableSnapshotBlockPublicAccessRequest {
+    [self validateSecureCodingForClass:[AWSEC2DisableSnapshotBlockPublicAccessRequest class]];
+}
+
+- (void) test_AWSEC2DisableSnapshotBlockPublicAccessResult {
+    [self validateSecureCodingForClass:[AWSEC2DisableSnapshotBlockPublicAccessResult class]];
 }
 
 - (void) test_AWSEC2DisableTransitGatewayRouteTablePropagationRequest {
@@ -5343,6 +5501,14 @@
 
 - (void) test_AWSEC2DisassociateInstanceEventWindowResult {
     [self validateSecureCodingForClass:[AWSEC2DisassociateInstanceEventWindowResult class]];
+}
+
+- (void) test_AWSEC2DisassociateIpamByoasnRequest {
+    [self validateSecureCodingForClass:[AWSEC2DisassociateIpamByoasnRequest class]];
+}
+
+- (void) test_AWSEC2DisassociateIpamByoasnResult {
+    [self validateSecureCodingForClass:[AWSEC2DisassociateIpamByoasnResult class]];
 }
 
 - (void) test_AWSEC2DisassociateIpamResourceDiscoveryRequest {
@@ -5513,8 +5679,16 @@
     [self validateSecureCodingForClass:[AWSEC2EnaSrdSpecification class]];
 }
 
+- (void) test_AWSEC2EnaSrdSpecificationRequest {
+    [self validateSecureCodingForClass:[AWSEC2EnaSrdSpecificationRequest class]];
+}
+
 - (void) test_AWSEC2EnaSrdUdpSpecification {
     [self validateSecureCodingForClass:[AWSEC2EnaSrdUdpSpecification class]];
+}
+
+- (void) test_AWSEC2EnaSrdUdpSpecificationRequest {
+    [self validateSecureCodingForClass:[AWSEC2EnaSrdUdpSpecificationRequest class]];
 }
 
 - (void) test_AWSEC2EnableAddressTransferRequest {
@@ -5589,6 +5763,14 @@
     [self validateSecureCodingForClass:[AWSEC2EnableImageDeprecationResult class]];
 }
 
+- (void) test_AWSEC2EnableImageRequest {
+    [self validateSecureCodingForClass:[AWSEC2EnableImageRequest class]];
+}
+
+- (void) test_AWSEC2EnableImageResult {
+    [self validateSecureCodingForClass:[AWSEC2EnableImageResult class]];
+}
+
 - (void) test_AWSEC2EnableIpamOrganizationAdminAccountRequest {
     [self validateSecureCodingForClass:[AWSEC2EnableIpamOrganizationAdminAccountRequest class]];
 }
@@ -5611,6 +5793,14 @@
 
 - (void) test_AWSEC2EnableSerialConsoleAccessResult {
     [self validateSecureCodingForClass:[AWSEC2EnableSerialConsoleAccessResult class]];
+}
+
+- (void) test_AWSEC2EnableSnapshotBlockPublicAccessRequest {
+    [self validateSecureCodingForClass:[AWSEC2EnableSnapshotBlockPublicAccessRequest class]];
+}
+
+- (void) test_AWSEC2EnableSnapshotBlockPublicAccessResult {
+    [self validateSecureCodingForClass:[AWSEC2EnableSnapshotBlockPublicAccessResult class]];
 }
 
 - (void) test_AWSEC2EnableTransitGatewayRouteTablePropagationRequest {
@@ -5985,6 +6175,14 @@
     [self validateSecureCodingForClass:[AWSEC2GetIpamDiscoveredAccountsResult class]];
 }
 
+- (void) test_AWSEC2GetIpamDiscoveredPublicAddressesRequest {
+    [self validateSecureCodingForClass:[AWSEC2GetIpamDiscoveredPublicAddressesRequest class]];
+}
+
+- (void) test_AWSEC2GetIpamDiscoveredPublicAddressesResult {
+    [self validateSecureCodingForClass:[AWSEC2GetIpamDiscoveredPublicAddressesResult class]];
+}
+
 - (void) test_AWSEC2GetIpamDiscoveredResourceCidrsRequest {
     [self validateSecureCodingForClass:[AWSEC2GetIpamDiscoveredResourceCidrsRequest class]];
 }
@@ -6073,12 +6271,28 @@
     [self validateSecureCodingForClass:[AWSEC2GetReservedInstancesExchangeQuoteResult class]];
 }
 
+- (void) test_AWSEC2GetSecurityGroupsForVpcRequest {
+    [self validateSecureCodingForClass:[AWSEC2GetSecurityGroupsForVpcRequest class]];
+}
+
+- (void) test_AWSEC2GetSecurityGroupsForVpcResult {
+    [self validateSecureCodingForClass:[AWSEC2GetSecurityGroupsForVpcResult class]];
+}
+
 - (void) test_AWSEC2GetSerialConsoleAccessStatusRequest {
     [self validateSecureCodingForClass:[AWSEC2GetSerialConsoleAccessStatusRequest class]];
 }
 
 - (void) test_AWSEC2GetSerialConsoleAccessStatusResult {
     [self validateSecureCodingForClass:[AWSEC2GetSerialConsoleAccessStatusResult class]];
+}
+
+- (void) test_AWSEC2GetSnapshotBlockPublicAccessStateRequest {
+    [self validateSecureCodingForClass:[AWSEC2GetSnapshotBlockPublicAccessStateRequest class]];
+}
+
+- (void) test_AWSEC2GetSnapshotBlockPublicAccessStateResult {
+    [self validateSecureCodingForClass:[AWSEC2GetSnapshotBlockPublicAccessStateResult class]];
 }
 
 - (void) test_AWSEC2GetSpotPlacementScoresRequest {
@@ -6385,6 +6599,14 @@
     [self validateSecureCodingForClass:[AWSEC2Instance class]];
 }
 
+- (void) test_AWSEC2InstanceAttachmentEnaSrdSpecification {
+    [self validateSecureCodingForClass:[AWSEC2InstanceAttachmentEnaSrdSpecification class]];
+}
+
+- (void) test_AWSEC2InstanceAttachmentEnaSrdUdpSpecification {
+    [self validateSecureCodingForClass:[AWSEC2InstanceAttachmentEnaSrdUdpSpecification class]];
+}
+
 - (void) test_AWSEC2InstanceAttribute {
     [self validateSecureCodingForClass:[AWSEC2InstanceAttribute class]];
 }
@@ -6557,6 +6779,10 @@
     [self validateSecureCodingForClass:[AWSEC2InstanceTagNotificationAttribute class]];
 }
 
+- (void) test_AWSEC2InstanceTopology {
+    [self validateSecureCodingForClass:[AWSEC2InstanceTopology class]];
+}
+
 - (void) test_AWSEC2InstanceTypeInfo {
     [self validateSecureCodingForClass:[AWSEC2InstanceTypeInfo class]];
 }
@@ -6609,6 +6835,10 @@
     [self validateSecureCodingForClass:[AWSEC2IpamDiscoveredAccount class]];
 }
 
+- (void) test_AWSEC2IpamDiscoveredPublicAddress {
+    [self validateSecureCodingForClass:[AWSEC2IpamDiscoveredPublicAddress class]];
+}
+
 - (void) test_AWSEC2IpamDiscoveredResourceCidr {
     [self validateSecureCodingForClass:[AWSEC2IpamDiscoveredResourceCidr class]];
 }
@@ -6635,6 +6865,26 @@
 
 - (void) test_AWSEC2IpamPoolCidrFailureReason {
     [self validateSecureCodingForClass:[AWSEC2IpamPoolCidrFailureReason class]];
+}
+
+- (void) test_AWSEC2IpamPoolSourceResource {
+    [self validateSecureCodingForClass:[AWSEC2IpamPoolSourceResource class]];
+}
+
+- (void) test_AWSEC2IpamPoolSourceResourceRequest {
+    [self validateSecureCodingForClass:[AWSEC2IpamPoolSourceResourceRequest class]];
+}
+
+- (void) test_AWSEC2IpamPublicAddressSecurityGroup {
+    [self validateSecureCodingForClass:[AWSEC2IpamPublicAddressSecurityGroup class]];
+}
+
+- (void) test_AWSEC2IpamPublicAddressTag {
+    [self validateSecureCodingForClass:[AWSEC2IpamPublicAddressTag class]];
+}
+
+- (void) test_AWSEC2IpamPublicAddressTags {
+    [self validateSecureCodingForClass:[AWSEC2IpamPublicAddressTags class]];
 }
 
 - (void) test_AWSEC2IpamResourceCidr {
@@ -6771,6 +7021,14 @@
 
 - (void) test_AWSEC2LaunchTemplateElasticInferenceAcceleratorResponse {
     [self validateSecureCodingForClass:[AWSEC2LaunchTemplateElasticInferenceAcceleratorResponse class]];
+}
+
+- (void) test_AWSEC2LaunchTemplateEnaSrdSpecification {
+    [self validateSecureCodingForClass:[AWSEC2LaunchTemplateEnaSrdSpecification class]];
+}
+
+- (void) test_AWSEC2LaunchTemplateEnaSrdUdpSpecification {
+    [self validateSecureCodingForClass:[AWSEC2LaunchTemplateEnaSrdUdpSpecification class]];
 }
 
 - (void) test_AWSEC2LaunchTemplateEnclaveOptions {
@@ -6955,6 +7213,18 @@
 
 - (void) test_AWSEC2LocalGatewayVirtualInterfaceGroup {
     [self validateSecureCodingForClass:[AWSEC2LocalGatewayVirtualInterfaceGroup class]];
+}
+
+- (void) test_AWSEC2LockSnapshotRequest {
+    [self validateSecureCodingForClass:[AWSEC2LockSnapshotRequest class]];
+}
+
+- (void) test_AWSEC2LockSnapshotResult {
+    [self validateSecureCodingForClass:[AWSEC2LockSnapshotResult class]];
+}
+
+- (void) test_AWSEC2LockedSnapshotsInfo {
+    [self validateSecureCodingForClass:[AWSEC2LockedSnapshotsInfo class]];
 }
 
 - (void) test_AWSEC2MaintenanceDetails {
@@ -7367,6 +7637,10 @@
 
 - (void) test_AWSEC2ModifyVerifiedAccessInstanceResult {
     [self validateSecureCodingForClass:[AWSEC2ModifyVerifiedAccessInstanceResult class]];
+}
+
+- (void) test_AWSEC2ModifyVerifiedAccessTrustProviderDeviceOptions {
+    [self validateSecureCodingForClass:[AWSEC2ModifyVerifiedAccessTrustProviderDeviceOptions class]];
 }
 
 - (void) test_AWSEC2ModifyVerifiedAccessTrustProviderOidcOptions {
@@ -7833,6 +8107,14 @@
     [self validateSecureCodingForClass:[AWSEC2ProvisionByoipCidrResult class]];
 }
 
+- (void) test_AWSEC2ProvisionIpamByoasnRequest {
+    [self validateSecureCodingForClass:[AWSEC2ProvisionIpamByoasnRequest class]];
+}
+
+- (void) test_AWSEC2ProvisionIpamByoasnResult {
+    [self validateSecureCodingForClass:[AWSEC2ProvisionIpamByoasnResult class]];
+}
+
 - (void) test_AWSEC2ProvisionIpamPoolCidrRequest {
     [self validateSecureCodingForClass:[AWSEC2ProvisionIpamPoolCidrRequest class]];
 }
@@ -7867,6 +8149,14 @@
 
 - (void) test_AWSEC2Purchase {
     [self validateSecureCodingForClass:[AWSEC2Purchase class]];
+}
+
+- (void) test_AWSEC2PurchaseCapacityBlockRequest {
+    [self validateSecureCodingForClass:[AWSEC2PurchaseCapacityBlockRequest class]];
+}
+
+- (void) test_AWSEC2PurchaseCapacityBlockResult {
+    [self validateSecureCodingForClass:[AWSEC2PurchaseCapacityBlockResult class]];
 }
 
 - (void) test_AWSEC2PurchaseHostReservationRequest {
@@ -8403,6 +8693,10 @@
 
 - (void) test_AWSEC2SecurityGroup {
     [self validateSecureCodingForClass:[AWSEC2SecurityGroup class]];
+}
+
+- (void) test_AWSEC2SecurityGroupForVpc {
+    [self validateSecureCodingForClass:[AWSEC2SecurityGroupForVpc class]];
 }
 
 - (void) test_AWSEC2SecurityGroupIdentifier {
@@ -8945,6 +9239,14 @@
     [self validateSecureCodingForClass:[AWSEC2UnassignPrivateNatGatewayAddressResult class]];
 }
 
+- (void) test_AWSEC2UnlockSnapshotRequest {
+    [self validateSecureCodingForClass:[AWSEC2UnlockSnapshotRequest class]];
+}
+
+- (void) test_AWSEC2UnlockSnapshotResult {
+    [self validateSecureCodingForClass:[AWSEC2UnlockSnapshotResult class]];
+}
+
 - (void) test_AWSEC2UnmonitorInstancesRequest {
     [self validateSecureCodingForClass:[AWSEC2UnmonitorInstancesRequest class]];
 }
@@ -9083,6 +9385,14 @@
 
 - (void) test_AWSEC2VerifiedAccessLogs {
     [self validateSecureCodingForClass:[AWSEC2VerifiedAccessLogs class]];
+}
+
+- (void) test_AWSEC2VerifiedAccessSseSpecificationRequest {
+    [self validateSecureCodingForClass:[AWSEC2VerifiedAccessSseSpecificationRequest class]];
+}
+
+- (void) test_AWSEC2VerifiedAccessSseSpecificationResponse {
+    [self validateSecureCodingForClass:[AWSEC2VerifiedAccessSseSpecificationResponse class]];
 }
 
 - (void) test_AWSEC2VerifiedAccessTrustProvider {
