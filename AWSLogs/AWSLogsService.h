@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -219,6 +219,31 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)cancelExportTask:(AWSLogsCancelExportTaskRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Creates a <i>delivery</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i> that you have already created.</p><p>Only some Amazon Web Services services support being configured as a delivery source using this operation. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>A delivery destination can represent a log group in CloudWatch Logs, an Amazon S3 bucket, or a delivery stream in Firehose.</p><p>To configure logs delivery between a supported Amazon Web Services service and a destination, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>You can't update an existing delivery. You can only create and delete deliveries.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreateDelivery service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsCreateDeliveryResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorValidation`, `AWSLogsErrorAccessDenied`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsCreateDeliveryRequest
+ @see AWSLogsCreateDeliveryResponse
+ */
+- (AWSTask<AWSLogsCreateDeliveryResponse *> *)createDelivery:(AWSLogsCreateDeliveryRequest *)request;
+
+/**
+ <p>Creates a <i>delivery</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i> that you have already created.</p><p>Only some Amazon Web Services services support being configured as a delivery source using this operation. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>A delivery destination can represent a log group in CloudWatch Logs, an Amazon S3 bucket, or a delivery stream in Firehose.</p><p>To configure logs delivery between a supported Amazon Web Services service and a destination, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>You can't update an existing delivery. You can only create and delete deliveries.</p>
+ 
+ @param request A container for the necessary parameters to execute the CreateDelivery service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorValidation`, `AWSLogsErrorAccessDenied`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsCreateDeliveryRequest
+ @see AWSLogsCreateDeliveryResponse
+ */
+- (void)createDelivery:(AWSLogsCreateDeliveryRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsCreateDeliveryResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Creates an export task so that you can efficiently export data from a log group to an Amazon S3 bucket. When you perform a <code>CreateExportTask</code> operation, you must use credentials that have permission to write to the S3 bucket that you specify as the destination.</p><p>Exporting log data to S3 buckets that are encrypted by KMS is supported. Exporting log data to Amazon S3 buckets that have S3 Object Lock enabled with a retention period is also supported.</p><p>Exporting to S3 buckets that are encrypted with AES-256 is supported. </p><p>This is an asynchronous call. If all the required information is provided, this operation initiates an export task and responds with the ID of the task. After the task has started, you can use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeExportTasks.html">DescribeExportTasks</a> to get the status of the export task. Each account can only have one active (<code>RUNNING</code> or <code>PENDING</code>) export task at a time. To cancel an export task, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CancelExportTask.html">CancelExportTask</a>.</p><p>You can export logs from multiple log groups or multiple time ranges to the same S3 bucket. To separate log data for each export task, specify a prefix to be used as the Amazon S3 key prefix for all exported objects.</p><note><p>Time-based sorting on chunks of log data inside an exported file is not guaranteed. You can sort the exported log field data by using Linux utilities.</p></note>
  
  @param request A container for the necessary parameters to execute the CreateExportTask service method.
@@ -244,7 +269,32 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)createExportTask:(AWSLogsCreateExportTaskRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsCreateExportTaskResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p><p>You must use the following guidelines when naming a log group:</p><ul><li><p>Log group names must be unique within a Region for an Amazon Web Services account.</p></li><li><p>Log group names can be between 1 and 512 characters long.</p></li><li><p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p></li></ul><p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html">PutRetentionPolicy</a>.</p><p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p><p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p><important><p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html">Using Symmetric and Asymmetric Keys</a>.</p></important>
+ <p>Creates an <i>anomaly detector</i> that regularly scans one or more log groups and look for patterns and anomalies in the logs.</p><p>An anomaly detector can help surface issues by automatically discovering anomalies in your log event traffic. An anomaly detector uses machine learning algorithms to scan log events and find <i>patterns</i>. A pattern is a shared text structure that recurs among your log fields. Patterns provide a useful tool for analyzing large sets of logs because a large number of log events can often be compressed into a few patterns.</p><p>The anomaly detector uses pattern recognition to find <code>anomalies</code>, which are unusual log events. It uses the <code>evaluationFrequency</code> to compare current log events and patterns with trained baselines. </p><p>Fields within a pattern are called <i>tokens</i>. Fields that vary within a pattern, such as a request ID or timestamp, are referred to as <i>dynamic tokens</i> and represented by <code>&lt;*&gt;</code>. </p><p>The following is an example of a pattern:</p><p><code>[INFO] Request time: &lt;*&gt; ms</code></p><p>This pattern represents log events like <code>[INFO] Request time: 327 ms</code> and other similar log events that differ only by the number, in this csse 327. When the pattern is displayed, the different numbers are replaced by <code>&lt;*&gt;</code></p><note><p>Any parts of log events that are masked as sensitive data are not scanned for anomalies. For more information about masking sensitive data, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Help protect sensitive log data with masking</a>. </p></note>
+ 
+ @param request A container for the necessary parameters to execute the CreateLogAnomalyDetector service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsCreateLogAnomalyDetectorResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`, `AWSLogsErrorLimitExceeded`.
+ 
+ @see AWSLogsCreateLogAnomalyDetectorRequest
+ @see AWSLogsCreateLogAnomalyDetectorResponse
+ */
+- (AWSTask<AWSLogsCreateLogAnomalyDetectorResponse *> *)createLogAnomalyDetector:(AWSLogsCreateLogAnomalyDetectorRequest *)request;
+
+/**
+ <p>Creates an <i>anomaly detector</i> that regularly scans one or more log groups and look for patterns and anomalies in the logs.</p><p>An anomaly detector can help surface issues by automatically discovering anomalies in your log event traffic. An anomaly detector uses machine learning algorithms to scan log events and find <i>patterns</i>. A pattern is a shared text structure that recurs among your log fields. Patterns provide a useful tool for analyzing large sets of logs because a large number of log events can often be compressed into a few patterns.</p><p>The anomaly detector uses pattern recognition to find <code>anomalies</code>, which are unusual log events. It uses the <code>evaluationFrequency</code> to compare current log events and patterns with trained baselines. </p><p>Fields within a pattern are called <i>tokens</i>. Fields that vary within a pattern, such as a request ID or timestamp, are referred to as <i>dynamic tokens</i> and represented by <code>&lt;*&gt;</code>. </p><p>The following is an example of a pattern:</p><p><code>[INFO] Request time: &lt;*&gt; ms</code></p><p>This pattern represents log events like <code>[INFO] Request time: 327 ms</code> and other similar log events that differ only by the number, in this csse 327. When the pattern is displayed, the different numbers are replaced by <code>&lt;*&gt;</code></p><note><p>Any parts of log events that are masked as sensitive data are not scanned for anomalies. For more information about masking sensitive data, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Help protect sensitive log data with masking</a>. </p></note>
+ 
+ @param request A container for the necessary parameters to execute the CreateLogAnomalyDetector service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`, `AWSLogsErrorLimitExceeded`.
+ 
+ @see AWSLogsCreateLogAnomalyDetectorRequest
+ @see AWSLogsCreateLogAnomalyDetectorResponse
+ */
+- (void)createLogAnomalyDetector:(AWSLogsCreateLogAnomalyDetectorRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsCreateLogAnomalyDetectorResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p><p>You must use the following guidelines when naming a log group:</p><ul><li><p>Log group names must be unique within a Region for an Amazon Web Services account.</p></li><li><p>Log group names can be between 1 and 512 characters long.</p></li><li><p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p></li><li><p>Log group names can't start with the string <code>aws/</code></p></li></ul><p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html">PutRetentionPolicy</a>.</p><p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p><p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p><important><p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html">Using Symmetric and Asymmetric Keys</a>.</p></important>
  
  @param request A container for the necessary parameters to execute the CreateLogGroup service method.
 
@@ -255,7 +305,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask *)createLogGroup:(AWSLogsCreateLogGroupRequest *)request;
 
 /**
- <p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p><p>You must use the following guidelines when naming a log group:</p><ul><li><p>Log group names must be unique within a Region for an Amazon Web Services account.</p></li><li><p>Log group names can be between 1 and 512 characters long.</p></li><li><p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p></li></ul><p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html">PutRetentionPolicy</a>.</p><p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p><p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p><important><p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html">Using Symmetric and Asymmetric Keys</a>.</p></important>
+ <p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p><p>You must use the following guidelines when naming a log group:</p><ul><li><p>Log group names must be unique within a Region for an Amazon Web Services account.</p></li><li><p>Log group names can be between 1 and 512 characters long.</p></li><li><p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p></li><li><p>Log group names can't start with the string <code>aws/</code></p></li></ul><p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html">PutRetentionPolicy</a>.</p><p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p><p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p><important><p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html">Using Symmetric and Asymmetric Keys</a>.</p></important>
  
  @param request A container for the necessary parameters to execute the CreateLogGroup service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -288,7 +338,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)createLogStream:(AWSLogsCreateLogStreamRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
- <p>Deletes a CloudWatch Logs account policy.</p><p>To use this operation, you must be signed on with the <code>logs:DeleteDataProtectionPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p>
+ <p>Deletes a CloudWatch Logs account policy. This stops the policy from applying to all log groups or a subset of log groups in the account. Log-group level policies will still be in effect.</p><p>To use this operation, you must be signed on with the correct permissions depending on the type of policy that you are deleting.</p><ul><li><p>To delete a data protection policy, you must have the <code>logs:DeleteDataProtectionPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p></li><li><p>To delete a subscription filter policy, you must have the <code>logs:DeleteSubscriptionFilter</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p></li></ul>
  
  @param request A container for the necessary parameters to execute the DeleteAccountPolicy service method.
 
@@ -299,7 +349,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask *)deleteAccountPolicy:(AWSLogsDeleteAccountPolicyRequest *)request;
 
 /**
- <p>Deletes a CloudWatch Logs account policy.</p><p>To use this operation, you must be signed on with the <code>logs:DeleteDataProtectionPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p>
+ <p>Deletes a CloudWatch Logs account policy. This stops the policy from applying to all log groups or a subset of log groups in the account. Log-group level policies will still be in effect.</p><p>To use this operation, you must be signed on with the correct permissions depending on the type of policy that you are deleting.</p><ul><li><p>To delete a data protection policy, you must have the <code>logs:DeleteDataProtectionPolicy</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p></li><li><p>To delete a subscription filter policy, you must have the <code>logs:DeleteSubscriptionFilter</code> and <code>logs:DeleteAccountPolicy</code> permissions.</p></li></ul>
  
  @param request A container for the necessary parameters to execute the DeleteAccountPolicy service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -332,6 +382,94 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)deleteDataProtectionPolicy:(AWSLogsDeleteDataProtectionPolicyRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Deletes s <i>delivery</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>. Deleting a delivery only deletes the connection between the delivery source and delivery destination. It does not delete the delivery destination or the delivery source.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDelivery service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliveryRequest
+ */
+- (AWSTask *)deleteDelivery:(AWSLogsDeleteDeliveryRequest *)request;
+
+/**
+ <p>Deletes s <i>delivery</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>. Deleting a delivery only deletes the connection between the delivery source and delivery destination. It does not delete the delivery destination or the delivery source.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDelivery service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliveryRequest
+ */
+- (void)deleteDelivery:(AWSLogsDeleteDeliveryRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a <i>delivery destination</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>.</p><p>You can't delete a delivery destination if any current deliveries are associated with it. To find whether any deliveries are associated with this delivery destination, use the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation and check the <code>deliveryDestinationArn</code> field in the results.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliveryDestination service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliveryDestinationRequest
+ */
+- (AWSTask *)deleteDeliveryDestination:(AWSLogsDeleteDeliveryDestinationRequest *)request;
+
+/**
+ <p>Deletes a <i>delivery destination</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>.</p><p>You can't delete a delivery destination if any current deliveries are associated with it. To find whether any deliveries are associated with this delivery destination, use the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation and check the <code>deliveryDestinationArn</code> field in the results.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliveryDestination service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliveryDestinationRequest
+ */
+- (void)deleteDeliveryDestination:(AWSLogsDeleteDeliveryDestinationRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a delivery destination policy. For more information about these policies, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a>.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliveryDestinationPolicy service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorConflict`.
+ 
+ @see AWSLogsDeleteDeliveryDestinationPolicyRequest
+ */
+- (AWSTask *)deleteDeliveryDestinationPolicy:(AWSLogsDeleteDeliveryDestinationPolicyRequest *)request;
+
+/**
+ <p>Deletes a delivery destination policy. For more information about these policies, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a>.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliveryDestinationPolicy service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorConflict`.
+ 
+ @see AWSLogsDeleteDeliveryDestinationPolicyRequest
+ */
+- (void)deleteDeliveryDestinationPolicy:(AWSLogsDeleteDeliveryDestinationPolicyRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes a <i>delivery source</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>.</p><p>You can't delete a delivery source if any current deliveries are associated with it. To find whether any deliveries are associated with this delivery source, use the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation and check the <code>deliverySourceName</code> field in the results.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliverySource service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliverySourceRequest
+ */
+- (AWSTask *)deleteDeliverySource:(AWSLogsDeleteDeliverySourceRequest *)request;
+
+/**
+ <p>Deletes a <i>delivery source</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i>.</p><p>You can't delete a delivery source if any current deliveries are associated with it. To find whether any deliveries are associated with this delivery source, use the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation and check the <code>deliverySourceName</code> field in the results.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteDeliverySource service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDeleteDeliverySourceRequest
+ */
+- (void)deleteDeliverySource:(AWSLogsDeleteDeliverySourceRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
  <p>Deletes the specified destination, and eventually disables all the subscription filters that publish to it. This operation does not delete the physical resource encapsulated by the destination.</p>
  
  @param request A container for the necessary parameters to execute the DeleteDestination service method.
@@ -352,6 +490,28 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
  @see AWSLogsDeleteDestinationRequest
  */
 - (void)deleteDestination:(AWSLogsDeleteDestinationRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Deletes the specified CloudWatch Logs anomaly detector.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteLogAnomalyDetector service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsDeleteLogAnomalyDetectorRequest
+ */
+- (AWSTask *)deleteLogAnomalyDetector:(AWSLogsDeleteLogAnomalyDetectorRequest *)request;
+
+/**
+ <p>Deletes the specified CloudWatch Logs anomaly detector.</p>
+ 
+ @param request A container for the necessary parameters to execute the DeleteLogAnomalyDetector service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsDeleteLogAnomalyDetectorRequest
+ */
+- (void)deleteLogAnomalyDetector:(AWSLogsDeleteLogAnomalyDetectorRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
  <p>Deletes the specified log group and permanently deletes all the archived log events associated with the log group.</p>
@@ -536,6 +696,81 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)describeAccountPolicies:(AWSLogsDescribeAccountPoliciesRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsDescribeAccountPoliciesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Retrieves a list of the deliveries that have been created in the account.</p><p>A <i>delivery</i> is a connection between a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html"><i>delivery source</i></a> and a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html"><i>delivery destination</i></a>.</p><p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enable logging from Amazon Web Services services.</a></p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliveries service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsDescribeDeliveriesResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliveriesRequest
+ @see AWSLogsDescribeDeliveriesResponse
+ */
+- (AWSTask<AWSLogsDescribeDeliveriesResponse *> *)describeDeliveries:(AWSLogsDescribeDeliveriesRequest *)request;
+
+/**
+ <p>Retrieves a list of the deliveries that have been created in the account.</p><p>A <i>delivery</i> is a connection between a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html"><i>delivery source</i></a> and a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html"><i>delivery destination</i></a>.</p><p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enable logging from Amazon Web Services services.</a></p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliveries service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliveriesRequest
+ @see AWSLogsDescribeDeliveriesResponse
+ */
+- (void)describeDeliveries:(AWSLogsDescribeDeliveriesRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsDescribeDeliveriesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves a list of the delivery destinations that have been created in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliveryDestinations service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsDescribeDeliveryDestinationsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliveryDestinationsRequest
+ @see AWSLogsDescribeDeliveryDestinationsResponse
+ */
+- (AWSTask<AWSLogsDescribeDeliveryDestinationsResponse *> *)describeDeliveryDestinations:(AWSLogsDescribeDeliveryDestinationsRequest *)request;
+
+/**
+ <p>Retrieves a list of the delivery destinations that have been created in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliveryDestinations service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliveryDestinationsRequest
+ @see AWSLogsDescribeDeliveryDestinationsResponse
+ */
+- (void)describeDeliveryDestinations:(AWSLogsDescribeDeliveryDestinationsRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsDescribeDeliveryDestinationsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves a list of the delivery sources that have been created in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliverySources service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsDescribeDeliverySourcesResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliverySourcesRequest
+ @see AWSLogsDescribeDeliverySourcesResponse
+ */
+- (AWSTask<AWSLogsDescribeDeliverySourcesResponse *> *)describeDeliverySources:(AWSLogsDescribeDeliverySourcesRequest *)request;
+
+/**
+ <p>Retrieves a list of the delivery sources that have been created in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the DescribeDeliverySources service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorValidation`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsDescribeDeliverySourcesRequest
+ @see AWSLogsDescribeDeliverySourcesResponse
+ */
+- (void)describeDeliverySources:(AWSLogsDescribeDeliverySourcesRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsDescribeDeliverySourcesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Lists all your destinations. The results are ASCII-sorted by destination name.</p>
  
  @param request A container for the necessary parameters to execute the DescribeDestinations service method.
@@ -686,7 +921,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)describeQueries:(AWSLogsDescribeQueriesRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsDescribeQueriesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>This operation returns a paginated list of your saved CloudWatch Logs Insights query definitions.</p><p>You can use the <code>queryDefinitionNamePrefix</code> parameter to limit the results to only the query definitions that have names that start with a certain string.</p>
+ <p>This operation returns a paginated list of your saved CloudWatch Logs Insights query definitions. You can retrieve query definitions from the current account or from a source account that is linked to the current account.</p><p>You can use the <code>queryDefinitionNamePrefix</code> parameter to limit the results to only the query definitions that have names that start with a certain string.</p>
  
  @param request A container for the necessary parameters to execute the DescribeQueryDefinitions service method.
 
@@ -698,7 +933,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask<AWSLogsDescribeQueryDefinitionsResponse *> *)describeQueryDefinitions:(AWSLogsDescribeQueryDefinitionsRequest *)request;
 
 /**
- <p>This operation returns a paginated list of your saved CloudWatch Logs Insights query definitions.</p><p>You can use the <code>queryDefinitionNamePrefix</code> parameter to limit the results to only the query definitions that have names that start with a certain string.</p>
+ <p>This operation returns a paginated list of your saved CloudWatch Logs Insights query definitions. You can retrieve query definitions from the current account or from a source account that is linked to the current account.</p><p>You can use the <code>queryDefinitionNamePrefix</code> parameter to limit the results to only the query definitions that have names that start with a certain string.</p>
  
  @param request A container for the necessary parameters to execute the DescribeQueryDefinitions service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -833,6 +1068,131 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)getDataProtectionPolicy:(AWSLogsGetDataProtectionPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetDataProtectionPolicyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
+ <p>Returns complete information about one logical <i>delivery</i>. A delivery is a connection between a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html"><i>delivery source</i></a> and a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html"><i>delivery destination</i></a>.</p><p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enable logging from Amazon Web Services services.</a></p><p>You need to specify the delivery <code>id</code> in this operation. You can find the IDs of the deliveries in your account with the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDelivery service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsGetDeliveryResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliveryRequest
+ @see AWSLogsGetDeliveryResponse
+ */
+- (AWSTask<AWSLogsGetDeliveryResponse *> *)getDelivery:(AWSLogsGetDeliveryRequest *)request;
+
+/**
+ <p>Returns complete information about one logical <i>delivery</i>. A delivery is a connection between a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html"><i>delivery source</i></a> and a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html"><i>delivery destination</i></a>.</p><p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enable logging from Amazon Web Services services.</a></p><p>You need to specify the delivery <code>id</code> in this operation. You can find the IDs of the deliveries in your account with the <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeDeliveries.html">DescribeDeliveries</a> operation.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDelivery service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliveryRequest
+ @see AWSLogsGetDeliveryResponse
+ */
+- (void)getDelivery:(AWSLogsGetDeliveryRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetDeliveryResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves complete information about one delivery destination.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliveryDestination service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsGetDeliveryDestinationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliveryDestinationRequest
+ @see AWSLogsGetDeliveryDestinationResponse
+ */
+- (AWSTask<AWSLogsGetDeliveryDestinationResponse *> *)getDeliveryDestination:(AWSLogsGetDeliveryDestinationRequest *)request;
+
+/**
+ <p>Retrieves complete information about one delivery destination.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliveryDestination service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliveryDestinationRequest
+ @see AWSLogsGetDeliveryDestinationResponse
+ */
+- (void)getDeliveryDestination:(AWSLogsGetDeliveryDestinationRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetDeliveryDestinationResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves the delivery destination policy assigned to the delivery destination that you specify. For more information about delivery destinations and their policies, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a>.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliveryDestinationPolicy service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsGetDeliveryDestinationPolicyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`.
+ 
+ @see AWSLogsGetDeliveryDestinationPolicyRequest
+ @see AWSLogsGetDeliveryDestinationPolicyResponse
+ */
+- (AWSTask<AWSLogsGetDeliveryDestinationPolicyResponse *> *)getDeliveryDestinationPolicy:(AWSLogsGetDeliveryDestinationPolicyRequest *)request;
+
+/**
+ <p>Retrieves the delivery destination policy assigned to the delivery destination that you specify. For more information about delivery destinations and their policies, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a>.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliveryDestinationPolicy service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`.
+ 
+ @see AWSLogsGetDeliveryDestinationPolicyRequest
+ @see AWSLogsGetDeliveryDestinationPolicyResponse
+ */
+- (void)getDeliveryDestinationPolicy:(AWSLogsGetDeliveryDestinationPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetDeliveryDestinationPolicyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves complete information about one delivery source.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliverySource service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsGetDeliverySourceResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliverySourceRequest
+ @see AWSLogsGetDeliverySourceResponse
+ */
+- (AWSTask<AWSLogsGetDeliverySourceResponse *> *)getDeliverySource:(AWSLogsGetDeliverySourceRequest *)request;
+
+/**
+ <p>Retrieves complete information about one delivery source.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetDeliverySource service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsGetDeliverySourceRequest
+ @see AWSLogsGetDeliverySourceResponse
+ */
+- (void)getDeliverySource:(AWSLogsGetDeliverySourceRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetDeliverySourceResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves information about the log anomaly detector that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetLogAnomalyDetector service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsGetLogAnomalyDetectorResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsGetLogAnomalyDetectorRequest
+ @see AWSLogsGetLogAnomalyDetectorResponse
+ */
+- (AWSTask<AWSLogsGetLogAnomalyDetectorResponse *> *)getLogAnomalyDetector:(AWSLogsGetLogAnomalyDetectorRequest *)request;
+
+/**
+ <p>Retrieves information about the log anomaly detector that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetLogAnomalyDetector service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsGetLogAnomalyDetectorRequest
+ @see AWSLogsGetLogAnomalyDetectorResponse
+ */
+- (void)getLogAnomalyDetector:(AWSLogsGetLogAnomalyDetectorRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetLogAnomalyDetectorResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
  <p>Lists log events from the specified log stream. You can list all of the log events or filter using a time range.</p><p>By default, this operation returns as many log events as can fit in a response size of 1MB (up to 10,000 log events). You can get additional log events by specifying one of the tokens in a subsequent call. This operation can return empty results while there are more log events available through the token.</p><p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account and view data from the linked source accounts. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html">CloudWatch cross-account observability</a>.</p><p>You can specify the log group to search by using either <code>logGroupIdentifier</code> or <code>logGroupName</code>. You must include one of these two parameters, but you can't include both. </p>
  
  @param request A container for the necessary parameters to execute the GetLogEvents service method.
@@ -908,7 +1268,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)getLogRecord:(AWSLogsGetLogRecordRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetLogRecordResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Returns the results from the specified query.</p><p>Only the fields requested in the query are returned, along with a <code>@ptr</code> field, which is the identifier for the log record. You can use the value of <code>@ptr</code> in a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogRecord.html">GetLogRecord</a> operation to get the full log record.</p><p><code>GetQueryResults</code> does not start running a query. To run a query, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a>.</p><p>If the value of the <code>Status</code> field in the output is <code>Running</code>, this operation returns only partial results. If you see a value of <code>Scheduled</code> or <code>Running</code> for the status, you can retry the operation later to see the final results. </p><p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start queries in linked source accounts. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html">CloudWatch cross-account observability</a>.</p>
+ <p>Returns the results from the specified query.</p><p>Only the fields requested in the query are returned, along with a <code>@ptr</code> field, which is the identifier for the log record. You can use the value of <code>@ptr</code> in a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogRecord.html">GetLogRecord</a> operation to get the full log record.</p><p><code>GetQueryResults</code> does not start running a query. To run a query, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a>. For more information about how long results of previous queries are available, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch_limits_cwl.html">CloudWatch Logs quotas</a>.</p><p>If the value of the <code>Status</code> field in the output is <code>Running</code>, this operation returns only partial results. If you see a value of <code>Scheduled</code> or <code>Running</code> for the status, you can retry the operation later to see the final results. </p><p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start queries in linked source accounts. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html">CloudWatch cross-account observability</a>.</p>
  
  @param request A container for the necessary parameters to execute the GetQueryResults service method.
 
@@ -920,7 +1280,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask<AWSLogsGetQueryResultsResponse *> *)getQueryResults:(AWSLogsGetQueryResultsRequest *)request;
 
 /**
- <p>Returns the results from the specified query.</p><p>Only the fields requested in the query are returned, along with a <code>@ptr</code> field, which is the identifier for the log record. You can use the value of <code>@ptr</code> in a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogRecord.html">GetLogRecord</a> operation to get the full log record.</p><p><code>GetQueryResults</code> does not start running a query. To run a query, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a>.</p><p>If the value of the <code>Status</code> field in the output is <code>Running</code>, this operation returns only partial results. If you see a value of <code>Scheduled</code> or <code>Running</code> for the status, you can retry the operation later to see the final results. </p><p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start queries in linked source accounts. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html">CloudWatch cross-account observability</a>.</p>
+ <p>Returns the results from the specified query.</p><p>Only the fields requested in the query are returned, along with a <code>@ptr</code> field, which is the identifier for the log record. You can use the value of <code>@ptr</code> in a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogRecord.html">GetLogRecord</a> operation to get the full log record.</p><p><code>GetQueryResults</code> does not start running a query. To run a query, use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html">StartQuery</a>. For more information about how long results of previous queries are available, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch_limits_cwl.html">CloudWatch Logs quotas</a>.</p><p>If the value of the <code>Status</code> field in the output is <code>Running</code>, this operation returns only partial results. If you see a value of <code>Scheduled</code> or <code>Running</code> for the status, you can retry the operation later to see the final results. </p><p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start queries in linked source accounts. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html">CloudWatch cross-account observability</a>.</p>
  
  @param request A container for the necessary parameters to execute the GetQueryResults service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -931,6 +1291,56 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
  @see AWSLogsGetQueryResultsResponse
  */
 - (void)getQueryResults:(AWSLogsGetQueryResultsRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsGetQueryResultsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Returns a list of anomalies that log anomaly detectors have found. For details about the structure format of each anomaly object that is returned, see the example in this section.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListAnomalies service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsListAnomaliesResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsListAnomaliesRequest
+ @see AWSLogsListAnomaliesResponse
+ */
+- (AWSTask<AWSLogsListAnomaliesResponse *> *)listAnomalies:(AWSLogsListAnomaliesRequest *)request;
+
+/**
+ <p>Returns a list of anomalies that log anomaly detectors have found. For details about the structure format of each anomaly object that is returned, see the example in this section.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListAnomalies service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsListAnomaliesRequest
+ @see AWSLogsListAnomaliesResponse
+ */
+- (void)listAnomalies:(AWSLogsListAnomaliesRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsListAnomaliesResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Retrieves a list of the log anomaly detectors in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListLogAnomalyDetectors service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsListLogAnomalyDetectorsResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsListLogAnomalyDetectorsRequest
+ @see AWSLogsListLogAnomalyDetectorsResponse
+ */
+- (AWSTask<AWSLogsListLogAnomalyDetectorsResponse *> *)listLogAnomalyDetectors:(AWSLogsListLogAnomalyDetectorsRequest *)request;
+
+/**
+ <p>Retrieves a list of the log anomaly detectors in the account.</p>
+ 
+ @param request A container for the necessary parameters to execute the ListLogAnomalyDetectors service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsListLogAnomalyDetectorsRequest
+ @see AWSLogsListLogAnomalyDetectorsResponse
+ */
+- (void)listLogAnomalyDetectors:(AWSLogsListLogAnomalyDetectorsRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsListLogAnomalyDetectorsResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Displays the tags associated with a CloudWatch Logs resource. Currently, log groups and destinations support tagging.</p>
@@ -983,7 +1393,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)listTagsLogGroup:(AWSLogsListTagsLogGroupRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsListTagsLogGroupResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates an account-level data protection policy that applies to all log groups in the account. A data protection policy can help safeguard sensitive data that's ingested by your log groups by auditing and masking the sensitive log data. Each account can have only one account-level policy.</p><important><p>Sensitive data is detected and masked when it is ingested into a log group. When you set a data protection policy, log events ingested into the log groups before that time are not masked.</p></important><p>If you use <code>PutAccountPolicy</code> to create a data protection policy for your whole account, it applies to both existing log groups and all log groups that are created later in this account. The account policy is applied to existing log groups with eventual consistency. It might take up to 5 minutes before sensitive data in existing log groups begins to be masked.</p><p>By default, when a user views a log event that includes masked data, the sensitive data is replaced by asterisks. A user who has the <code>logs:Unmask</code> permission can use a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html">GetLogEvents</a> or <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html">FilterLogEvents</a> operation with the <code>unmask</code> parameter set to <code>true</code> to view the unmasked log events. Users with the <code>logs:Unmask</code> can also view unmasked data in the CloudWatch Logs console by running a CloudWatch Logs Insights query with the <code>unmask</code> query command.</p><p>For more information, including a list of types of data that can be audited and masked, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Protect sensitive log data with masking</a>.</p><p>To use the <code>PutAccountPolicy</code> operation, you must be signed on with the <code>logs:PutDataProtectionPolicy</code> and <code>logs:PutAccountPolicy</code> permissions.</p><p>The <code>PutAccountPolicy</code> operation applies to all log groups in the account. You can also use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html">PutDataProtectionPolicy</a> to create a data protection policy that applies to just one log group. If a log group has its own data protection policy and the account also has an account-level data protection policy, then the two policies are cumulative. Any sensitive term specified in either policy is masked.</p>
+ <p>Creates an account-level data protection policy or subscription filter policy that applies to all log groups or a subset of log groups in the account.</p><p><b>Data protection policy</b></p><p>A data protection policy can help safeguard sensitive data that's ingested by your log groups by auditing and masking the sensitive log data. Each account can have only one account-level data protection policy.</p><important><p>Sensitive data is detected and masked when it is ingested into a log group. When you set a data protection policy, log events ingested into the log groups before that time are not masked.</p></important><p>If you use <code>PutAccountPolicy</code> to create a data protection policy for your whole account, it applies to both existing log groups and all log groups that are created later in this account. The account-level policy is applied to existing log groups with eventual consistency. It might take up to 5 minutes before sensitive data in existing log groups begins to be masked.</p><p>By default, when a user views a log event that includes masked data, the sensitive data is replaced by asterisks. A user who has the <code>logs:Unmask</code> permission can use a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html">GetLogEvents</a> or <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html">FilterLogEvents</a> operation with the <code>unmask</code> parameter set to <code>true</code> to view the unmasked log events. Users with the <code>logs:Unmask</code> can also view unmasked data in the CloudWatch Logs console by running a CloudWatch Logs Insights query with the <code>unmask</code> query command.</p><p>For more information, including a list of types of data that can be audited and masked, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Protect sensitive log data with masking</a>.</p><p>To use the <code>PutAccountPolicy</code> operation for a data protection policy, you must be signed on with the <code>logs:PutDataProtectionPolicy</code> and <code>logs:PutAccountPolicy</code> permissions.</p><p>The <code>PutAccountPolicy</code> operation applies to all log groups in the account. You can use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html">PutDataProtectionPolicy</a> to create a data protection policy that applies to just one log group. If a log group has its own data protection policy and the account also has an account-level data protection policy, then the two policies are cumulative. Any sensitive term specified in either policy is masked.</p><p><b>Subscription filter policy</b></p><p>A subscription filter policy sets up a real-time feed of log events from CloudWatch Logs to other Amazon Web Services services. Account-level subscription filter policies apply to both existing log groups and log groups that are created later in this account. Supported destinations are Kinesis Data Streams, Firehose, and Lambda. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Kinesis Data Streams data stream in the same account as the subscription policy, for same-account delivery.</p></li><li><p>An Firehose data stream in the same account as the subscription policy, for same-account delivery.</p></li><li><p>A Lambda function in the same account as the subscription policy, for same-account delivery.</p></li><li><p>A logical destination in a different account created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a>, for cross-account delivery. Kinesis Data Streams and Firehose are supported as logical destinations.</p></li></ul><p>Each account can have one account-level subscription filter policy. If you are updating an existing filter, you must specify the correct name in <code>PolicyName</code>. To perform a <code>PutAccountPolicy</code> subscription filter operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
  
  @param request A container for the necessary parameters to execute the PutAccountPolicy service method.
 
@@ -995,7 +1405,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask<AWSLogsPutAccountPolicyResponse *> *)putAccountPolicy:(AWSLogsPutAccountPolicyRequest *)request;
 
 /**
- <p>Creates an account-level data protection policy that applies to all log groups in the account. A data protection policy can help safeguard sensitive data that's ingested by your log groups by auditing and masking the sensitive log data. Each account can have only one account-level policy.</p><important><p>Sensitive data is detected and masked when it is ingested into a log group. When you set a data protection policy, log events ingested into the log groups before that time are not masked.</p></important><p>If you use <code>PutAccountPolicy</code> to create a data protection policy for your whole account, it applies to both existing log groups and all log groups that are created later in this account. The account policy is applied to existing log groups with eventual consistency. It might take up to 5 minutes before sensitive data in existing log groups begins to be masked.</p><p>By default, when a user views a log event that includes masked data, the sensitive data is replaced by asterisks. A user who has the <code>logs:Unmask</code> permission can use a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html">GetLogEvents</a> or <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html">FilterLogEvents</a> operation with the <code>unmask</code> parameter set to <code>true</code> to view the unmasked log events. Users with the <code>logs:Unmask</code> can also view unmasked data in the CloudWatch Logs console by running a CloudWatch Logs Insights query with the <code>unmask</code> query command.</p><p>For more information, including a list of types of data that can be audited and masked, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Protect sensitive log data with masking</a>.</p><p>To use the <code>PutAccountPolicy</code> operation, you must be signed on with the <code>logs:PutDataProtectionPolicy</code> and <code>logs:PutAccountPolicy</code> permissions.</p><p>The <code>PutAccountPolicy</code> operation applies to all log groups in the account. You can also use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html">PutDataProtectionPolicy</a> to create a data protection policy that applies to just one log group. If a log group has its own data protection policy and the account also has an account-level data protection policy, then the two policies are cumulative. Any sensitive term specified in either policy is masked.</p>
+ <p>Creates an account-level data protection policy or subscription filter policy that applies to all log groups or a subset of log groups in the account.</p><p><b>Data protection policy</b></p><p>A data protection policy can help safeguard sensitive data that's ingested by your log groups by auditing and masking the sensitive log data. Each account can have only one account-level data protection policy.</p><important><p>Sensitive data is detected and masked when it is ingested into a log group. When you set a data protection policy, log events ingested into the log groups before that time are not masked.</p></important><p>If you use <code>PutAccountPolicy</code> to create a data protection policy for your whole account, it applies to both existing log groups and all log groups that are created later in this account. The account-level policy is applied to existing log groups with eventual consistency. It might take up to 5 minutes before sensitive data in existing log groups begins to be masked.</p><p>By default, when a user views a log event that includes masked data, the sensitive data is replaced by asterisks. A user who has the <code>logs:Unmask</code> permission can use a <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html">GetLogEvents</a> or <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_FilterLogEvents.html">FilterLogEvents</a> operation with the <code>unmask</code> parameter set to <code>true</code> to view the unmasked log events. Users with the <code>logs:Unmask</code> can also view unmasked data in the CloudWatch Logs console by running a CloudWatch Logs Insights query with the <code>unmask</code> query command.</p><p>For more information, including a list of types of data that can be audited and masked, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html">Protect sensitive log data with masking</a>.</p><p>To use the <code>PutAccountPolicy</code> operation for a data protection policy, you must be signed on with the <code>logs:PutDataProtectionPolicy</code> and <code>logs:PutAccountPolicy</code> permissions.</p><p>The <code>PutAccountPolicy</code> operation applies to all log groups in the account. You can use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html">PutDataProtectionPolicy</a> to create a data protection policy that applies to just one log group. If a log group has its own data protection policy and the account also has an account-level data protection policy, then the two policies are cumulative. Any sensitive term specified in either policy is masked.</p><p><b>Subscription filter policy</b></p><p>A subscription filter policy sets up a real-time feed of log events from CloudWatch Logs to other Amazon Web Services services. Account-level subscription filter policies apply to both existing log groups and log groups that are created later in this account. Supported destinations are Kinesis Data Streams, Firehose, and Lambda. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Kinesis Data Streams data stream in the same account as the subscription policy, for same-account delivery.</p></li><li><p>An Firehose data stream in the same account as the subscription policy, for same-account delivery.</p></li><li><p>A Lambda function in the same account as the subscription policy, for same-account delivery.</p></li><li><p>A logical destination in a different account created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a>, for cross-account delivery. Kinesis Data Streams and Firehose are supported as logical destinations.</p></li></ul><p>Each account can have one account-level subscription filter policy. If you are updating an existing filter, you must specify the correct name in <code>PolicyName</code>. To perform a <code>PutAccountPolicy</code> subscription filter operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
  
  @param request A container for the necessary parameters to execute the PutAccountPolicy service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1031,6 +1441,81 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
  @see AWSLogsPutDataProtectionPolicyResponse
  */
 - (void)putDataProtectionPolicy:(AWSLogsPutDataProtectionPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsPutDataProtectionPolicyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates or updates a logical <i>delivery destination</i>. A delivery destination is an Amazon Web Services resource that represents an Amazon Web Services service that logs can be sent to. CloudWatch Logs, Amazon S3, and Firehose are supported as logs delivery destinations.</p><p>To configure logs delivery between a supported Amazon Web Services service and a destination, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Use <code>PutDeliveryDestination</code> to create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. </p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>If you use this operation to update an existing delivery destination, all the current delivery destination parameters are overwritten with the new parameter values that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliveryDestination service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsPutDeliveryDestinationResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`, `AWSLogsErrorResourceNotFound`.
+ 
+ @see AWSLogsPutDeliveryDestinationRequest
+ @see AWSLogsPutDeliveryDestinationResponse
+ */
+- (AWSTask<AWSLogsPutDeliveryDestinationResponse *> *)putDeliveryDestination:(AWSLogsPutDeliveryDestinationRequest *)request;
+
+/**
+ <p>Creates or updates a logical <i>delivery destination</i>. A delivery destination is an Amazon Web Services resource that represents an Amazon Web Services service that logs can be sent to. CloudWatch Logs, Amazon S3, and Firehose are supported as logs delivery destinations.</p><p>To configure logs delivery between a supported Amazon Web Services service and a destination, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Use <code>PutDeliveryDestination</code> to create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. </p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>If you use this operation to update an existing delivery destination, all the current delivery destination parameters are overwritten with the new parameter values that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliveryDestination service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorThrottling`, `AWSLogsErrorResourceNotFound`.
+ 
+ @see AWSLogsPutDeliveryDestinationRequest
+ @see AWSLogsPutDeliveryDestinationResponse
+ */
+- (void)putDeliveryDestination:(AWSLogsPutDeliveryDestinationRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsPutDeliveryDestinationResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates and assigns an IAM policy that grants permissions to CloudWatch Logs to deliver logs cross-account to a specified destination in this account. To configure the delivery of logs from an Amazon Web Services service in another account to a logs delivery destination in the current account, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>Use this operation in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>.</p></li></ul><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>The contents of the policy must include two statements. One statement enables general logs delivery, and the other allows delivery to the chosen destination. See the examples for the needed policies.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliveryDestinationPolicy service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsPutDeliveryDestinationPolicyResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorConflict`.
+ 
+ @see AWSLogsPutDeliveryDestinationPolicyRequest
+ @see AWSLogsPutDeliveryDestinationPolicyResponse
+ */
+- (AWSTask<AWSLogsPutDeliveryDestinationPolicyResponse *> *)putDeliveryDestinationPolicy:(AWSLogsPutDeliveryDestinationPolicyRequest *)request;
+
+/**
+ <p>Creates and assigns an IAM policy that grants permissions to CloudWatch Logs to deliver logs cross-account to a specified destination in this account. To configure the delivery of logs from an Amazon Web Services service in another account to a logs delivery destination in the current account, you must do the following:</p><ul><li><p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html">PutDeliverySource</a>.</p></li><li><p>Create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>Use this operation in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>.</p></li></ul><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>The contents of the policy must include two statements. One statement enables general logs delivery, and the other allows delivery to the chosen destination. See the examples for the needed policies.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliveryDestinationPolicy service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorValidation`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorConflict`.
+ 
+ @see AWSLogsPutDeliveryDestinationPolicyRequest
+ @see AWSLogsPutDeliveryDestinationPolicyResponse
+ */
+- (void)putDeliveryDestinationPolicy:(AWSLogsPutDeliveryDestinationPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsPutDeliveryDestinationPolicyResponse * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Creates or updates a logical <i>delivery source</i>. A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose.</p><p>To configure logs delivery between a delivery destination and an Amazon Web Services service that is supported as a delivery source, you must do the following:</p><ul><li><p>Use <code>PutDeliverySource</code> to create a delivery source, which is a logical object that represents the resource that is actually sending the logs. </p></li><li><p>Use <code>PutDeliveryDestination</code> to create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>If you use this operation to update an existing delivery source, all the current delivery source parameters are overwritten with the new parameter values that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliverySource service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSLogsPutDeliverySourceResponse`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsPutDeliverySourceRequest
+ @see AWSLogsPutDeliverySourceResponse
+ */
+- (AWSTask<AWSLogsPutDeliverySourceResponse *> *)putDeliverySource:(AWSLogsPutDeliverySourceRequest *)request;
+
+/**
+ <p>Creates or updates a logical <i>delivery source</i>. A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose.</p><p>To configure logs delivery between a delivery destination and an Amazon Web Services service that is supported as a delivery source, you must do the following:</p><ul><li><p>Use <code>PutDeliverySource</code> to create a delivery source, which is a logical object that represents the resource that is actually sending the logs. </p></li><li><p>Use <code>PutDeliveryDestination</code> to create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html">PutDeliveryDestination</a>.</p></li><li><p>If you are delivering logs cross-account, you must use <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p></li><li><p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html">CreateDelivery</a>. </p></li></ul><p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p><p>Only some Amazon Web Services services support being configured as a delivery source. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html">Enabling logging from Amazon Web Services services.</a></p><p>If you use this operation to update an existing delivery source, all the current delivery source parameters are overwritten with the new parameter values that you specify.</p>
+ 
+ @param request A container for the necessary parameters to execute the PutDeliverySource service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorConflict`, `AWSLogsErrorValidation`, `AWSLogsErrorServiceQuotaExceeded`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorThrottling`.
+ 
+ @see AWSLogsPutDeliverySourceRequest
+ @see AWSLogsPutDeliverySourceResponse
+ */
+- (void)putDeliverySource:(AWSLogsPutDeliverySourceRequest *)request completionHandler:(void (^ _Nullable)(AWSLogsPutDeliverySourceResponse * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Creates or updates a destination. This operation is used only to create destinations for cross-account subscriptions.</p><p>A destination encapsulates a physical resource (such as an Amazon Kinesis stream). With a destination, you can subscribe to a real-time stream of log events for a different account, ingested using <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html">PutLogEvents</a>.</p><p>Through an access policy, a destination controls what is written to it. By default, <code>PutDestination</code> does not set any access policy with the destination, which means a cross-account user cannot call <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutSubscriptionFilter.html">PutSubscriptionFilter</a> against this destination. To enable this, the destination owner must call <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestinationPolicy.html">PutDestinationPolicy</a> after <code>PutDestination</code>.</p><p>To perform a <code>PutDestination</code> operation, you must also have the <code>iam:PassRole</code> permission.</p>
@@ -1199,7 +1684,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (void)putRetentionPolicy:(AWSLogsPutRetentionPolicyRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates or updates a subscription filter and associates it with the specified log group. With subscription filters, you can subscribe to a real-time stream of log events ingested through <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html">PutLogEvents</a> and have them delivered to a specific destination. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Amazon Kinesis data stream belonging to the same account as the subscription filter, for same-account delivery.</p></li><li><p>A logical destination created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a> that belongs to a different account, for cross-account delivery. We currently support Kinesis Data Streams and Kinesis Data Firehose as logical destinations.</p></li><li><p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as the subscription filter, for same-account delivery.</p></li><li><p>An Lambda function that belongs to the same account as the subscription filter, for same-account delivery.</p></li></ul><p>Each log group can have up to two subscription filters associated with it. If you are updating an existing filter, you must specify the correct name in <code>filterName</code>. </p><p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
+ <p>Creates or updates a subscription filter and associates it with the specified log group. With subscription filters, you can subscribe to a real-time stream of log events ingested through <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html">PutLogEvents</a> and have them delivered to a specific destination. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Amazon Kinesis data stream belonging to the same account as the subscription filter, for same-account delivery.</p></li><li><p>A logical destination created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a> that belongs to a different account, for cross-account delivery. We currently support Kinesis Data Streams and Firehose as logical destinations.</p></li><li><p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as the subscription filter, for same-account delivery.</p></li><li><p>An Lambda function that belongs to the same account as the subscription filter, for same-account delivery.</p></li></ul><p>Each log group can have up to two subscription filters associated with it. If you are updating an existing filter, you must specify the correct name in <code>filterName</code>. </p><p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
  
  @param request A container for the necessary parameters to execute the PutSubscriptionFilter service method.
 
@@ -1210,7 +1695,7 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
 - (AWSTask *)putSubscriptionFilter:(AWSLogsPutSubscriptionFilterRequest *)request;
 
 /**
- <p>Creates or updates a subscription filter and associates it with the specified log group. With subscription filters, you can subscribe to a real-time stream of log events ingested through <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html">PutLogEvents</a> and have them delivered to a specific destination. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Amazon Kinesis data stream belonging to the same account as the subscription filter, for same-account delivery.</p></li><li><p>A logical destination created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a> that belongs to a different account, for cross-account delivery. We currently support Kinesis Data Streams and Kinesis Data Firehose as logical destinations.</p></li><li><p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as the subscription filter, for same-account delivery.</p></li><li><p>An Lambda function that belongs to the same account as the subscription filter, for same-account delivery.</p></li></ul><p>Each log group can have up to two subscription filters associated with it. If you are updating an existing filter, you must specify the correct name in <code>filterName</code>. </p><p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
+ <p>Creates or updates a subscription filter and associates it with the specified log group. With subscription filters, you can subscribe to a real-time stream of log events ingested through <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html">PutLogEvents</a> and have them delivered to a specific destination. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p><p>The following destinations are supported for subscription filters:</p><ul><li><p>An Amazon Kinesis data stream belonging to the same account as the subscription filter, for same-account delivery.</p></li><li><p>A logical destination created with <a href="https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html">PutDestination</a> that belongs to a different account, for cross-account delivery. We currently support Kinesis Data Streams and Firehose as logical destinations.</p></li><li><p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as the subscription filter, for same-account delivery.</p></li><li><p>An Lambda function that belongs to the same account as the subscription filter, for same-account delivery.</p></li></ul><p>Each log group can have up to two subscription filters associated with it. If you are updating an existing filter, you must specify the correct name in <code>filterName</code>. </p><p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>
  
  @param request A container for the necessary parameters to execute the PutSubscriptionFilter service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -1382,6 +1867,50 @@ FOUNDATION_EXPORT NSString *const AWSLogsSDKVersion;
  @see AWSLogsUntagResourceRequest
  */
 - (void)untagResource:(AWSLogsUntagResourceRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Use this operation to <i>suppress</i> anomaly detection for a specified anomaly or pattern. If you suppress an anomaly, CloudWatch Logs won’t report new occurrences of that anomaly and won't update that anomaly with new data. If you suppress a pattern, CloudWatch Logs won’t report any anomalies related to that pattern.</p><p>You must specify either <code>anomalyId</code> or <code>patternId</code>, but you can't specify both parameters in the same operation.</p><p>If you have previously used this operation to suppress detection of a pattern or anomaly, you can use it again to cause CloudWatch Logs to end the suppression. To do this, use this operation and specify the anomaly or pattern to stop suppressing, and omit the <code>suppressionType</code> and <code>suppressionPeriod</code> parameters.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateAnomaly service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsUpdateAnomalyRequest
+ */
+- (AWSTask *)updateAnomaly:(AWSLogsUpdateAnomalyRequest *)request;
+
+/**
+ <p>Use this operation to <i>suppress</i> anomaly detection for a specified anomaly or pattern. If you suppress an anomaly, CloudWatch Logs won’t report new occurrences of that anomaly and won't update that anomaly with new data. If you suppress a pattern, CloudWatch Logs won’t report any anomalies related to that pattern.</p><p>You must specify either <code>anomalyId</code> or <code>patternId</code>, but you can't specify both parameters in the same operation.</p><p>If you have previously used this operation to suppress detection of a pattern or anomaly, you can use it again to cause CloudWatch Logs to end the suppression. To do this, use this operation and specify the anomaly or pattern to stop suppressing, and omit the <code>suppressionType</code> and <code>suppressionPeriod</code> parameters.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateAnomaly service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsUpdateAnomalyRequest
+ */
+- (void)updateAnomaly:(AWSLogsUpdateAnomalyRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Updates an existing log anomaly detector.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateLogAnomalyDetector service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will be `nil`. On failed execution, `task.error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsUpdateLogAnomalyDetectorRequest
+ */
+- (AWSTask *)updateLogAnomalyDetector:(AWSLogsUpdateLogAnomalyDetectorRequest *)request;
+
+/**
+ <p>Updates an existing log anomaly detector.</p>
+ 
+ @param request A container for the necessary parameters to execute the UpdateLogAnomalyDetector service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSLogsErrorDomain` domain and the following error code: `AWSLogsErrorInvalidParameter`, `AWSLogsErrorResourceNotFound`, `AWSLogsErrorServiceUnavailable`, `AWSLogsErrorOperationAborted`.
+ 
+ @see AWSLogsUpdateLogAnomalyDetectorRequest
+ */
+- (void)updateLogAnomalyDetector:(AWSLogsUpdateLogAnomalyDetectorRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 @end
 
